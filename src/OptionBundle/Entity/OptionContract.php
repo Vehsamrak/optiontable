@@ -33,10 +33,15 @@ class OptionContract
     private $strike;
 
     /**
-     * @var Futures
-     * @ORM\ManyToOne(targetEntity="Futures")
+     * OptionContract constructor.
+     * @param string $type
+     * @param float  $strike
      */
-    private $futures;
+    public function __construct(string $type, float $strike)
+    {
+        $this->type = $type;
+        $this->strike = $strike;
+    }
 
     /**
      * Get id
@@ -63,13 +68,5 @@ class OptionContract
     public function getStrike(): float
     {
         return $this->strike;
-    }
-
-    /**
-     * @return Futures
-     */
-    public function getFutures(): Futures
-    {
-        return $this->futures;
     }
 }

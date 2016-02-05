@@ -54,8 +54,12 @@ class Futures
      * @param \DateTime $expiration
      * @param string    $symbol
      */
-    public function __construct(string $name, int $optionPointPrice, \DateTime $expiration, string $symbol)
-    {
+    public function __construct(
+        string $name,
+        int $optionPointPrice,
+        \DateTime $expiration,
+        string $symbol
+    ) {
         $this->name = $name;
         $this->optionPointPrice = $optionPointPrice;
         $this->expiration = $expiration;
