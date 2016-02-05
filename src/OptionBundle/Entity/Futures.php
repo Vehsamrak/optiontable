@@ -5,11 +5,11 @@ namespace OptionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Features
- * @ORM\Table(name="features")
- * @ORM\Entity(repositoryClass="OptionBundle\Repository\FeaturesRepository")
+ * Futures contract
+ * @ORM\Table(name="futures")
+ * @ORM\Entity(repositoryClass="OptionBundle\Repository\FuturesRepository")
  */
-class Features
+class Futures
 {
 
     const EXPIRATION_DATE_FORMAT = 'Y-m-d';
