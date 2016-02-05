@@ -1,1 +1,6 @@
+option:
+    resource: "@OptionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 
