@@ -31,7 +31,7 @@ class Futures
 
     /**
      * @var int
-     * @ORM\Column(name="optionPointPrice", type="integer")
+     * @ORM\Column(name="option_point_price", type="integer")
      */
     private $optionPointPrice;
 
