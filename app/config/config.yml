@@ -50,7 +50,7 @@ doctrine:
         auto_mapping: true
 
 doctrine_migrations:
-    dir_name: "%kernel.root_dir%/migrations"
+    dir_name: "migrations"
     namespace: Application\Migrations
     table_name: migrations
     name: Application Migrations
