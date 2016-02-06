@@ -44,6 +44,7 @@ class Futures
     /**
      * @var Symbol
      * @ORM\ManyToOne(targetEntity="Symbol")
+     * @ORM\JoinColumn(name="symbol", referencedColumnName="symbol")
      */
     private $symbol;
 

@@ -13,16 +13,9 @@ class Symbol
 {
 
     /**
-     * @var int
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
-     * @ORM\Column(name="symbol", type="string", length=2, unique=true)
+     * @ORM\Column(name="symbol", type="integer")
+     * @ORM\Id
      */
     private $symbol;
 
@@ -32,15 +25,6 @@ class Symbol
     public function __construct(string $symbol)
     {
         $this->symbol = $symbol;
-    }
-
-    /**
-     * Get id
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     /**
