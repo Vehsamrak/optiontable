@@ -20,11 +20,18 @@ class Symbol
     private $symbol;
 
     /**
+     * @var string
+     * @ORM\Column(name="name", type="string", length=64)
+     */
+    private $name;
+
+    /**
      * @param string $symbol
      */
-    public function __construct(string $symbol)
+    public function __construct(string $symbol, string $name)
     {
         $this->symbol = $symbol;
+        $this->name = $name;
     }
 
     /**
@@ -34,5 +41,13 @@ class Symbol
     public function getSymbol(): string
     {
         return $this->symbol;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
