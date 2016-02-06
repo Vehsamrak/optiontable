@@ -14,7 +14,7 @@ class Symbol
 
     /**
      * @var string
-     * @ORM\Column(name="symbol", type="integer")
+     * @ORM\Column(name="symbol", type="string", length=2)
      * @ORM\Id
      */
     private $symbol;
