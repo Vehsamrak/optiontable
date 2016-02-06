@@ -3,14 +3,19 @@
 namespace OptionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OptionBundle\Exception\WrongOptionType;
 
 /**
  * OptionContract
- * @ORM\Table(name="option")
+ * @ORM\Table(name="option", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_option_type_strike", columns={"type", "strike"})
+ * })
  * @ORM\Entity(repositoryClass="OptionBundle\Repository\OptionContractRepository")
  */
 class OptionContract
 {
+    const TYPE_PUT = 'put';
+    const TYPE_CALL = 'call';
 
     /**
      * @var int
@@ -33,12 +38,16 @@ class OptionContract
     private $strike;
 
     /**
-     * OptionContract constructor.
      * @param string $type
      * @param float  $strike
+     * @throws WrongOptionType
      */
     public function __construct(string $type, float $strike)
     {
+        if ($type !== self::TYPE_CALL && $type !== self::TYPE_PUT) {
+            throw new WrongOptionType();
+        }
+
         $this->type = $type;
         $this->strike = $strike;
     }
