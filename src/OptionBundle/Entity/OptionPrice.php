@@ -35,8 +35,8 @@ class OptionPrice
     private $optionPrice;
 
     /**
-     * @var string
-     * @ORM\Column(name="option_contract", type="string", length=255)
+     * @var OptionContract
+     * @ORM\ManyToOne(targetEntity="OptionContract")
      */
     private $optionContract;
 
