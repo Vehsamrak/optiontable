@@ -26,7 +26,7 @@ class Version20160206022318 extends AbstractMigration
                 strike DOUBLE PRECISION NOT NULL,
                 INDEX IDX_5A8600B0E4BFBD9A (futures_id),
                 PRIMARY KEY(id)
-            ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB);
+            ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
         ');
 
         $this->addSql('
