@@ -42,8 +42,8 @@ class Futures
     private $expiration;
 
     /**
-     * @var string
-     * @ORM\Column(name="symbol", type="string", length=255)
+     * @var Symbol
+     * @ORM\ManyToOne(targetEntity="Symbol")
      */
     private $symbol;
 

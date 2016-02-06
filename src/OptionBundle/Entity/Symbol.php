@@ -34,7 +34,6 @@ class Symbol
         $this->symbol = $symbol;
     }
 
-
     /**
      * Get id
      * @return int
