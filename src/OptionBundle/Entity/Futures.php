@@ -53,13 +53,13 @@ class Futures
      * @param string    $name
      * @param int       $optionPointPrice
      * @param \DateTime $expiration
-     * @param string    $symbol
+     * @param Symbol    $symbol
      */
     public function __construct(
         string $name,
         int $optionPointPrice,
         \DateTime $expiration,
-        string $symbol
+        Symbol $symbol
     ) {
         $this->name = $name;
         $this->optionPointPrice = $optionPointPrice;
@@ -87,7 +87,7 @@ class Futures
     }
 
     /**
-     * Get optionPointPrice
+     * Price of option point
      * @return int
      */
     public function getOptionPointPrice(): int
@@ -96,7 +96,7 @@ class Futures
     }
 
     /**
-     * Get expiration
+     * Expiration date
      */
     public function getExpiration(): string
     {
@@ -104,7 +104,7 @@ class Futures
     }
 
     /**
-     * Get expiration year
+     * Year of expiration
      */
     public function getExpirationYear(): string
     {
@@ -112,10 +112,10 @@ class Futures
     }
 
     /**
-     * Get symbol
-     * @return string
+     * Futures symbol
+     * @return Symbol
      */
-    public function getSymbol(): string
+    public function getSymbol(): Symbol
     {
         return $this->symbol;
     }
