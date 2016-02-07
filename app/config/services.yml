@@ -1,9 +1,27 @@
 services:
     optionboard.price_collector:
         class: OptionBundle\Service\PriceCollector
-        arguments: ["@optionboard.futures_repository"]
+        arguments:
+        - "@optionboard.futures_repository"
+        - "@optionboard.option_contract_repository"
+        - "@optionboard.option_price_repository"
 
     optionboard.futures_repository:
         class: OptionBundle\Repository\FuturesRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments: [OptionBundle\Entity\Futures]
+
+    optionboard.symbol_repository:
+        class: OptionBundle\Repository\SymbolRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [OptionBundle\Entity\Symbol]
+
+    optionboard.option_contract_repository:
+        class: OptionBundle\Repository\OptionContractRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [OptionBundle\Entity\OptionContract]
+
+    optionboard.option_price_repository:
+        class: OptionBundle\Repository\OptionPriceRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [OptionBundle\Entity\OptionPrice]

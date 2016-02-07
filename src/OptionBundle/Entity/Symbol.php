@@ -32,7 +32,7 @@ class Symbol
      * @param int    $optionPointPrice
      * @throws WrongSymbol
      */
-    public function __construct(int $optionPointPrice, string $symbol)
+    public function __construct(string $symbol, int $optionPointPrice)
     {
         if (!SymbolCode::isValid($symbol)) {
             throw new WrongSymbol($symbol);

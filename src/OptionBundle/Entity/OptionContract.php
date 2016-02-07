@@ -7,7 +7,7 @@ use OptionBundle\Exception\WrongOptionType;
 
 /**
  * OptionContract
- * @ORM\Table(name="option", uniqueConstraints={
+ * @ORM\Table(name="option_contract", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="unique_option_type_strike", columns={"type", "strike"})
  * })
  * @ORM\Entity(repositoryClass="OptionBundle\Repository\OptionContractRepository")
@@ -39,7 +39,7 @@ class OptionContract
 
     /**
      * @param string $type
-     * @param float  $strike
+     * @param float $strike
      * @throws WrongOptionType
      */
     public function __construct(string $type, float $strike)

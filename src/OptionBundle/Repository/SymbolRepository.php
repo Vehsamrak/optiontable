@@ -2,6 +2,7 @@
 
 namespace OptionBundle\Repository;
 
+use OptionBundle\Entity\Symbol;
 use OptionBundle\Repository\Infrastructure\AbstractRepository;
 
 /**
@@ -12,4 +13,14 @@ use OptionBundle\Repository\Infrastructure\AbstractRepository;
 class SymbolRepository extends AbstractRepository
 {
 
+    /**
+     * @param string $symbolName
+     * @return Symbol|null
+     */
+    public function findOneBySymbol(string $symbolName): Symbol
+    {
+        return $this->findOneBy([
+            'symbol' => $symbolName,
+        ]);
+    }
 }

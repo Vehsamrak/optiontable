@@ -66,18 +66,18 @@ class OptionPrice
 
     /**
      * OptionPrice constructor.
-     * @param \DateTime $date
-     * @param float     $optionPrice
-     * @param string    $optionContract
-     * @param float     $futuresPrice
-     * @param float     $futuresPrice52WeekHigh
-     * @param float     $futuresPrice52WeekLow
-     * @param Futures   $futures
+     * @param \DateTime      $date
+     * @param float          $optionPrice
+     * @param OptionContract $optionContract
+     * @param float          $futuresPrice
+     * @param float          $futuresPrice52WeekHigh
+     * @param float          $futuresPrice52WeekLow
+     * @param Futures        $futures
      */
     public function __construct(
         \DateTime $date,
         float $optionPrice,
-        string $optionContract,
+        OptionContract $optionContract,
         float $futuresPrice,
         float $futuresPrice52WeekHigh,
         float $futuresPrice52WeekLow,
@@ -121,9 +121,9 @@ class OptionPrice
 
     /**
      * Get optionContract
-     * @return string
+     * @return OptionContract
      */
-    public function getOptionContract(): string
+    public function getOptionContract(): OptionContract
     {
         return $this->optionContract;
     }

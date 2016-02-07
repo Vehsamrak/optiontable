@@ -40,15 +40,15 @@ class Futures
 
     /**
      * Features constructor
-     * @param \DateTime $expiration
-     * @param Symbol    $symbol
+     * @param string $expiration
+     * @param Symbol $symbol
      */
     public function __construct(
-        \DateTime $expiration,
-        Symbol $symbol
+        Symbol $symbol,
+        string $expiration
     ) {
-        $this->expiration = $expiration;
         $this->symbol = $symbol;
+        $this->expiration = new \DateTime($expiration);
     }
 
     /**
