@@ -4,11 +4,12 @@ namespace OptionBundle\Repository;
 
 use OptionBundle\Entity\Futures;
 use OptionBundle\Entity\Symbol;
+use OptionBundle\Repository\Infrastructure\AbstractRepository;
 
 /**
  * FuturesRepository
  */
-class FuturesRepository extends \Doctrine\ORM\EntityRepository
+class FuturesRepository extends AbstractRepository
 {
 
     /**
