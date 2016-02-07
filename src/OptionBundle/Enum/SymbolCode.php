@@ -5,11 +5,12 @@
  */
 
 namespace OptionBundle\Enum;
+use MyCLabs\Enum\Enum;
 
-use SplEnum;
-
-/** {@inheritDoc} */
-class SymbolEnum extends SplEnum
+/**
+ * List of symbol codes
+ */
+class SymbolCode extends Enum
 {
     // Energies
     const CRUDE_OIL_WTI = 'CL';
