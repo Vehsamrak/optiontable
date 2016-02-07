@@ -3,7 +3,8 @@
 namespace OptionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use OptionBundle\Enum\SymbolEnum;
+use OptionBundle\Enum\SymbolCode;
+use OptionBundle\Exception\WrongSymbol;
 
 /**
  * Symbol
@@ -14,42 +15,31 @@ class Symbol
 {
 
     /**
-     * @var SymbolEnum
+     * @var string
      * @ORM\Column(name="symbol", type="string", length=2)
      * @ORM\Id
      */
     private $symbol;
 
     /**
-     * @var string
-     * @ORM\Column(name="name", type="string", length=64)
+     * @param string $symbol
+     * @param string $name
+     * @throws WrongSymbol
      */
-    private $name;
-
-    /**
-     * @param SymbolEnum $symbol
-     * @param string     $name
-     */
-    public function __construct(SymbolEnum $symbol, string $name)
+    public function __construct(string $symbol)
     {
+        if (!SymbolCode::isValid($symbol)) {
+            throw new WrongSymbol($symbol);
+        }
+
         $this->symbol = $symbol;
-        $this->name = $name;
     }
 
     /**
      * Get symbol
-     * @return SymbolEnum
      */
-    public function getSymbol(): SymbolEnum
+    public function getSymbol(): string
     {
         return $this->symbol;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 }
