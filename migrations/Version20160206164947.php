@@ -19,7 +19,7 @@ class Version20160206164947 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE option_price ADD option_contract_id INT DEFAULT NULL, DROP option_contract');
-        $this->addSql('ALTER TABLE option_price ADD CONSTRAINT FK_F3239FB1342B949 FOREIGN KEY (option_contract_id) REFERENCES `option` (id)');
+        $this->addSql('ALTER TABLE option_price ADD CONSTRAINT FK_F3239FB1342B949 FOREIGN KEY (option_contract_id) REFERENCES option_contract (id)');
         $this->addSql('CREATE INDEX IDX_F3239FB1342B949 ON option_price (option_contract_id)');
     }
 
