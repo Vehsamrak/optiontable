@@ -22,17 +22,24 @@ class Symbol
     private $symbol;
 
     /**
+     * @var int
+     * @ORM\Column(name="option_point_price", type="integer")
+     */
+    private $optionPointPrice;
+
+    /**
      * @param string $symbol
-     * @param string $name
+     * @param int    $optionPointPrice
      * @throws WrongSymbol
      */
-    public function __construct(string $symbol)
+    public function __construct(int $optionPointPrice, string $symbol)
     {
         if (!SymbolCode::isValid($symbol)) {
             throw new WrongSymbol($symbol);
         }
 
         $this->symbol = $symbol;
+        $this->optionPointPrice = $optionPointPrice;
     }
 
     /**
@@ -41,5 +48,14 @@ class Symbol
     public function getSymbol(): string
     {
         return $this->symbol;
+    }
+
+    /**
+     * Price of option point
+     * @return int
+     */
+    public function getOptionPointPrice(): int
+    {
+        return $this->optionPointPrice;
     }
 }
