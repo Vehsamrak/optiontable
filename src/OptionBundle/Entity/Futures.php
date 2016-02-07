@@ -24,12 +24,6 @@ class Futures
     private $id;
 
     /**
-     * @var string
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
      * @var int
      * @ORM\Column(name="option_point_price", type="integer")
      */
@@ -50,23 +44,19 @@ class Futures
 
     /**
      * Features constructor
-     * @param string    $name
      * @param int       $optionPointPrice
      * @param \DateTime $expiration
      * @param Symbol    $symbol
      */
     public function __construct(
-        string $name,
         int $optionPointPrice,
         \DateTime $expiration,
         Symbol $symbol
     ) {
-        $this->name = $name;
         $this->optionPointPrice = $optionPointPrice;
         $this->expiration = $expiration;
         $this->symbol = $symbol;
     }
-
 
     /**
      * Get id
@@ -75,15 +65,6 @@ class Futures
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * Get name
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
