@@ -1,7 +1,9 @@
 services:
+    optionboard.price_collector:
+        class: OptionBundle\Service\PriceCollector
+        arguments: ["@optionboard.futures_repository"]
+
     optionboard.futures_repository:
         class: OptionBundle\Repository\FuturesRepository
-        factory_method: getRepository
-        factory_service: doctrine.orm.entity_manager
-        arguments:
-            - OptionBundle\Entity\Futures
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [OptionBundle\Entity\Futures]
