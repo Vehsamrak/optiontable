@@ -6,7 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Futures contract
- * @ORM\Table(name="futures")
+ * @ORM\Table(name="futures", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_futures_expiration_symbol", columns={"expiration", "symbol"})
+ * })
  * @ORM\Entity(repositoryClass="OptionBundle\Repository\FuturesRepository")
  */
 class Futures
