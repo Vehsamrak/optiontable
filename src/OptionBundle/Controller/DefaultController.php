@@ -20,9 +20,9 @@ class DefaultController extends Controller
         $symbol = $this->get('optionboard.symbol_repository')->findOneBySymbol(SymbolCode::CRUDE_OIL_WTI);
         $priceCollector = $this->get('optionboard.price_collector');
 
-        $priceCollector->saveOptionPrices($symbol, (int) (new \DateTime('2016-03-01'))->format('n'));
-        $priceCollector->saveOptionPrices($symbol, (int) (new \DateTime('2016-04-01'))->format('n'));
-        $priceCollector->saveOptionPrices($symbol, (int) (new \DateTime('2016-05-01'))->format('n'));
+        $priceCollector->saveOptionPrices($symbol, (int) 3);
+        $priceCollector->saveOptionPrices($symbol, (int) 4);
+        $priceCollector->saveOptionPrices($symbol, (int) 5);
 
         return $this->render('OptionBundle:Default:index.html.twig');
     }
