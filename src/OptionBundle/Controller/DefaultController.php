@@ -18,10 +18,11 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $symbol = $this->get('optionboard.symbol_repository')->findOneBySymbol(SymbolCode::CRUDE_OIL_WTI);
-        $dateTime = new \DateTime('2016-02-01');
-
         $priceCollector = $this->get('optionboard.price_collector');
-        $priceCollector->saveOptionPrices($symbol, (int) $dateTime->format('n') + 1);
+
+        $priceCollector->saveOptionPrices($symbol, (int) (new \DateTime('2016-03-01'))->format('n'));
+        $priceCollector->saveOptionPrices($symbol, (int) (new \DateTime('2016-04-01'))->format('n'));
+        $priceCollector->saveOptionPrices($symbol, (int) (new \DateTime('2016-05-01'))->format('n'));
 
         return $this->render('OptionBundle:Default:index.html.twig');
     }
