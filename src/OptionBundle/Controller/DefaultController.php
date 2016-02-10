@@ -2,16 +2,13 @@
 
 namespace OptionBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-use OptionBundle\Entity\Futures;
-use OptionBundle\Entity\Symbol;
 use OptionBundle\Enum\SymbolCode;
-use OptionBundle\Service\PriceCollector;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
+
     /**
      * @Route("/")
      */
