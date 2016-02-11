@@ -100,6 +100,12 @@ class PriceCollector
         /** @var simple_html_dom $optionHtml */
         $optionHtml = HtmlDomParser::file_get_html($optionTableUrl);
 
+        $pageError = $optionHtml->find('span.error');
+
+        if (count($pageError)) {
+        	return [];
+        }
+
         $futuresDataUrl = $this->createFuturesDataUrl($symbol, $monthNumber);
         /** @var simple_html_dom $optionHtml */
         $futuresDataHtml = HtmlDomParser::file_get_html($futuresDataUrl);
