@@ -8,7 +8,7 @@ namespace OptionBundle\Enum;
 use MyCLabs\Enum\Enum;
 
 /**
- * List of symbol codes
+ * Enumerated symbol codes
  */
 class SymbolCode extends Enum
 {
