@@ -39,7 +39,6 @@ class Futures
     private $symbol;
 
     /**
-     * Features constructor
      * @param string $expiration
      * @param Symbol $symbol
      */

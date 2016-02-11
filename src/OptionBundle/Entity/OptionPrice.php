@@ -59,20 +59,12 @@ class OptionPrice
     private $futuresPrice52WeekLow;
 
     /**
-     * @var Futures
-     * @ORM\ManyToOne(targetEntity="Futures")
-     */
-    private $futures;
-
-    /**
-     * OptionPrice constructor.
      * @param \DateTime      $date
      * @param float          $optionPrice
      * @param OptionContract $optionContract
      * @param float          $futuresPrice
      * @param float          $futuresPrice52WeekHigh
      * @param float          $futuresPrice52WeekLow
-     * @param Futures        $futures
      */
     public function __construct(
         \DateTime $date,
@@ -80,8 +72,7 @@ class OptionPrice
         OptionContract $optionContract,
         float $futuresPrice,
         float $futuresPrice52WeekHigh,
-        float $futuresPrice52WeekLow,
-        Futures $futures
+        float $futuresPrice52WeekLow
     ) {
         $this->date = $date;
         $this->optionPrice = $optionPrice;
@@ -89,7 +80,6 @@ class OptionPrice
         $this->futuresPrice = $futuresPrice;
         $this->futuresPrice52WeekHigh = $futuresPrice52WeekHigh;
         $this->futuresPrice52WeekLow = $futuresPrice52WeekLow;
-        $this->futures = $futures;
     }
 
     /**
@@ -153,14 +143,5 @@ class OptionPrice
     public function getFuturesPrice52WeekLow(): float
     {
         return $this->futuresPrice52WeekLow;
-    }
-
-    /**
-     * Get futures
-     * @return Futures
-     */
-    public function getFutures(): Futures
-    {
-        return $this->futures;
     }
 }

@@ -30,26 +30,21 @@ class OptionPriceRepository extends AbstractRepository
     }
 
     /**
-     * @param int $futuresId
      * @param int $optionId
      * @return OptionPrice|null
      */
-    public function findOneForLastHourByFuturesIdAndOptionId(int $futuresId, int $optionId)
+    public function findOneForLastHourByOptionId(int $optionId)
     {
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
         $queryBuilder->select('option_price');
         $queryBuilder->from('OptionBundle:OptionPrice', 'option_price');
-        $queryBuilder->where('option_price.futures = :futures_id');
-        $queryBuilder->andWhere('option_price.optionContract = :option_id');
+        $queryBuilder->where('option_price.optionContract = :option_id');
         $queryBuilder->andWhere(
             $queryBuilder->expr()->between('option_price.date', ':date_from', ':date_to')
         );
 
-        $queryBuilder->setParameters([
-            'futures_id' => $futuresId,
-            'option_id'  => $optionId,
-        ]);
+        $queryBuilder->setParameter('option_id', $optionId);
 
         $lastHour = (new \DateTime($this->dateTime->format('Y-m-d H:i:s')))->modify('-50 minutes');
 

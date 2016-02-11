@@ -10,14 +10,16 @@ class OptionContractRepository extends AbstractRepository
 
     /**
      * @param string $optionType
+     * @param int $futuresId
      * @param float  $strike
-     * @return OptionContract
+     * @return null|object
      */
-    public function findOneByTypeAndStrike(string $optionType, float $strike)
+    public function findOneByTypeFuturesAndStrike(string $optionType, int $futuresId, float $strike)
     {
         return $this->findOneBy([
-            'type'   => $optionType,
-            'strike' => $strike,
+            'type'    => $optionType,
+            'futures' => $futuresId,
+            'strike'  => $strike,
         ]);
     }
 }

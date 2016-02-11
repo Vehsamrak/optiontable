@@ -271,10 +271,10 @@ class PriceCollector
         float $futuresPrice52WeekLow,
         Futures $futures
     ) {
-        $optionContract = $this->getOptionContract($type, $strike);
+        $optionContract = $this->getOptionContract($type, $futures, $strike);
 
         $optionPrice = $this->optionPriceRepository
-            ->findOneForLastHourByFuturesIdAndOptionId($futures->getId(), $optionContract->getId());
+            ->findOneForLastHourByOptionId($optionContract->getId());
 
         if ($optionPrice) {
             return null;
@@ -292,16 +292,22 @@ class PriceCollector
     }
 
     /**
-     * @param string $optionType
-     * @param float  $strike
+     * @param string  $optionType
+     * @param Futures $futures
+     * @param float   $strike
      * @return OptionContract
      */
-    private function getOptionContract(string $optionType, float $strike): OptionContract
+    private function getOptionContract(
+        string $optionType,
+        Futures $futures,
+        float $strike
+    ): OptionContract
     {
-        $optionContract = $this->optionContractRepository->findOneByTypeAndStrike($optionType, $strike);
+        $optionContract = $this->optionContractRepository
+            ->findOneByTypeFuturesAndStrike($optionType, $futures->getId(), $strike);
 
         if (!$optionContract) {
-            $optionContract = new OptionContract($optionType, $strike);
+            $optionContract = new OptionContract($optionType, $futures, $strike);
             $this->optionContractRepository->persist($optionContract);
             $this->optionContractRepository->flush();
         }
