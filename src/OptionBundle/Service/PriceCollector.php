@@ -103,7 +103,7 @@ class PriceCollector
         $pageError = $optionHtml->find('span.error');
 
         if (count($pageError)) {
-        	return [];
+            return [];
         }
 
         $futuresDataUrl = $this->createFuturesDataUrl($symbol, $monthNumber);
@@ -121,6 +121,14 @@ class PriceCollector
         $priceLines = $optionHtml->find('.datatable_simple tr');
         $priceLinesCount = count($priceLines);
 
+        $futures = $this->futuresRepository->findOneBySymbolAndExpiration($symbol, $futuresExpirationDate);
+
+        if (!$futures) {
+            $futures = new Futures($symbol, $futuresExpirationDate);
+            $this->futuresRepository->persist($futures);
+            $this->futuresRepository->flush();
+        }
+
         $prices = [];
         foreach ($priceLines as $priceLineKey => $priceLine) {
             if ($priceLineKey < 2 || $priceLineKey > $priceLinesCount - 5) {
@@ -136,14 +144,6 @@ class PriceCollector
             $strike = (float) $strikeNode->text();
             $callPrice = (float) $callPriceNode->text();
             $putPrice = (float) $putPriceNode->text();
-
-            $futures = $this->futuresRepository->findOneBySymbolAndExpiration($symbol, $futuresExpirationDate);
-
-            if (!$futures) {
-                $futures = new Futures($symbol, $futuresExpirationDate);
-                $this->futuresRepository->persist($futures);
-                $this->futuresRepository->flush();
-            }
 
             if ($callPrice > 0) {
                 $prices[] = $this->createOptionPrice(
@@ -270,8 +270,7 @@ class PriceCollector
         float $futuresPrice52WeekHigh,
         float $futuresPrice52WeekLow,
         Futures $futures
-    )
-    {
+    ) {
         $optionContract = $this->getOptionContract($type, $strike);
 
         $optionPrice = $this->optionPriceRepository
