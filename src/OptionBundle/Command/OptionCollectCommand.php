@@ -19,6 +19,9 @@ class OptionCollectCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $startTime = microtime(true);
+
+        $output->writeln('Fetching option prices ...');
+
         $container = $this->getContainer();
 
         $symbol = $container->get('optionboard.symbol_repository')->findOneBySymbol(SymbolCode::CRUDE_OIL_WTI);
