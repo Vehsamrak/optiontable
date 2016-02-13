@@ -120,6 +120,9 @@ class PriceCollector
         $futuresPrice52WeekHigh = $this->makeFloat($futuresPrice52WeekNode[0]->text());
         $futuresPrice52WeekLow = $this->makeFloat($futuresPrice52WeekNode[1]->text());
 
+        $futuresDataHtml->clear();
+        $futuresDataHtml = null;
+
         $priceLines = $optionHtml->find('.datatable_simple tr');
         $priceLinesCount = count($priceLines);
 
@@ -173,8 +176,7 @@ class PriceCollector
         }
 
         $optionHtml->clear();
-        $futuresDataHtml->clear();
-        unset($optionHtml, $futuresDataHtml);
+        $optionHtml = null;
 
         return $prices;
     }
