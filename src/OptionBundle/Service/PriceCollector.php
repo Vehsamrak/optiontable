@@ -100,9 +100,7 @@ class PriceCollector
         /** @var simple_html_dom $optionHtml */
         $optionHtml = HtmlDomParser::file_get_html($optionTableUrl);
 
-        $pageError = $optionHtml->find('span.error');
-
-        if (count($pageError)) {
+        if (count($optionHtml->find('span.error'))) {
             return [];
         }
 
@@ -112,11 +110,15 @@ class PriceCollector
 
         $futuresExpirationDate = strip_tags($optionHtml->find('#divContent table table tr td')[1]->text());
 
-        $futuresPrice = (float) $futuresDataHtml->find('#dtaLast')[0]->text();
+        if (count($futuresDataHtml->find('span.error'))) {
+            return [];
+        }
+
+        $futuresPrice = $this->makeFloat($futuresDataHtml->find('#dtaLast')[0]->text());
 
         $futuresPrice52WeekNode = $futuresDataHtml->find('#main-content tr td td span strong');
-        $futuresPrice52WeekHigh = (float) $futuresPrice52WeekNode[0]->text();
-        $futuresPrice52WeekLow = (float) $futuresPrice52WeekNode[1]->text();
+        $futuresPrice52WeekHigh = $this->makeFloat($futuresPrice52WeekNode[0]->text());
+        $futuresPrice52WeekLow = $this->makeFloat($futuresPrice52WeekNode[1]->text());
 
         $priceLines = $optionHtml->find('.datatable_simple tr');
         $priceLinesCount = count($priceLines);
@@ -141,9 +143,9 @@ class PriceCollector
             $strikeNode = $priceLineNodes[3];
             $putPriceNode = $priceLineNodes[4];
 
-            $strike = (float) $strikeNode->text();
-            $callPrice = (float) $callPriceNode->text();
-            $putPrice = (float) $putPriceNode->text();
+            $strike = $this->makeFloat($strikeNode->text());
+            $callPrice = $this->makeFloat($callPriceNode->text());
+            $putPrice = $this->makeFloat($putPriceNode->text());
 
             if ($callPrice > 0) {
                 $prices[] = $this->createOptionPrice(
@@ -210,10 +212,11 @@ class PriceCollector
     }
 
     /**
+     * Get month letter by month number
      * @param int $monthNumber
      * @return string
      */
-    private function getMonthLetter(int $monthNumber): string
+    public function getMonthLetter(int $monthNumber): string
     {
         $monthLetters = [
             1  => 'F',
@@ -313,5 +316,15 @@ class PriceCollector
         }
 
         return $optionContract;
+    }
+
+    /**
+     * Process price string as float
+     * @param $string
+     * @return float
+     */
+    private function makeFloat($string): float
+    {
+        return (float) str_replace('-', '.', $string);
     }
 }

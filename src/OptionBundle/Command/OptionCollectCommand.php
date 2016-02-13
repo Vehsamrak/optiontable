@@ -10,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class OptionCollectCommand extends ContainerAwareCommand
 {
 
+    const NUMBER_OF_MONTHS_TO_PARSE = 4;
+
     protected function configure()
     {
         $this->setName('option:collect');
@@ -20,21 +22,28 @@ class OptionCollectCommand extends ContainerAwareCommand
     {
         $startTime = microtime(true);
 
-        $output->writeln('Fetching option prices ...');
-
-        $container = $this->getContainer();
-
-        $symbol = $container->get('optionboard.symbol_repository')->findOneBySymbol(SymbolCode::CRUDE_OIL_WTI);
-        $priceCollector = $container->get('optionboard.price_collector');
+        $output->writeln(
+            sprintf('Fetching option prices for next %d months ...', self::NUMBER_OF_MONTHS_TO_PARSE)
+        );
 
         $currentMonth = (int) (new \DateTime())->format('n');
 
-        $priceCollector->saveOptionPrices($symbol, $currentMonth);
-        $priceCollector->saveOptionPrices($symbol, $currentMonth + 1);
-        $priceCollector->saveOptionPrices($symbol, $currentMonth + 2);
-        $priceCollector->saveOptionPrices($symbol, $currentMonth + 3);
+        $container = $this->getContainer();
+        $symbolRepository = $container->get('optionboard.symbol_repository');
+        $priceCollector = $container->get('optionboard.price_collector');
+
+        foreach (SymbolCode::values() as $symbolCode) {
+            $symbol = $symbolRepository->findOneBySymbol($symbolCode);
+
+            for ($i = 0; $i < self::NUMBER_OF_MONTHS_TO_PARSE; $i++) {
+                $monthNumber = $currentMonth + $i;
+                $monthLetter = $priceCollector->getMonthLetter($monthNumber);
+
+                $output->writeln(sprintf('Fetching prices of %s%s ...', $symbolCode, $monthLetter));
+                $priceCollector->saveOptionPrices($symbol, $monthNumber);
+            }
+        }
 
         $output->writeln(sprintf('Option prices were saved. It takes %d seconds.', microtime(true) - $startTime));
     }
-
 }
