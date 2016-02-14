@@ -40,7 +40,7 @@ class OptionCollectCommand extends ContainerAwareCommand
         $output->writeln(
             sprintf('Fetching option prices for next %d months. Symbols from %d to %d ...',
                 self::NUMBER_OF_MONTHS_TO_PARSE,
-                $symbolOffset,
+                $symbolOffset + 1,
                 $symbolOffset + $symbolLimit
             )
         );
