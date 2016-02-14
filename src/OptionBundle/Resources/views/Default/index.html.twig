@@ -3,7 +3,7 @@
 {% block body %}
 
     {% for futures in futuresList %}
-        <div><a href="futures/{{ futures.symbol.symbol }}">{{ futures.symbol.symbol }}</a></div>
+        <div><a href="futures/{{ futures }}">{{ futures }}</a></div>
     {% endfor %}
 
 {% endblock body %}
