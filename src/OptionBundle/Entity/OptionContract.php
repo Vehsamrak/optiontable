@@ -2,7 +2,9 @@
 
 namespace OptionBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use OptionBundle\Exception\WrongOptionType;
 
 /**
@@ -32,16 +34,22 @@ class OptionContract
     private $type;
 
     /**
+     * @var float
+     * @ORM\Column(name="strike", type="float")
+     */
+    private $strike;
+
+    /**
      * @var Futures
      * @ORM\ManyToOne(targetEntity="Futures")
      */
     private $futures;
 
     /**
-     * @var float
-     * @ORM\Column(name="strike", type="float")
+     * @var PersistentCollection|OptionPrice[]
+     * @ORM\OneToMany(targetEntity="OptionPrice", mappedBy="optionContract")
      */
-    private $strike;
+    private $optionPrices;
 
     /**
      * @param string  $type
@@ -62,6 +70,7 @@ class OptionContract
         $this->type = $type;
         $this->strike = $strike;
         $this->futures = $futures;
+        $this->optionPrices = new ArrayCollection();
     }
 
     /**
@@ -83,6 +92,15 @@ class OptionContract
     }
 
     /**
+     * Get strike
+     * @return float
+     */
+    public function getStrike(): float
+    {
+        return $this->strike;
+    }
+
+    /**
      * Get futures
      * @return Futures
      */
@@ -92,11 +110,10 @@ class OptionContract
     }
 
     /**
-     * Get strike
-     * @return float
+     * @return OptionPrice[]
      */
-    public function getStrike(): float
+    public function getOptionPrices(): PersistentCollection
     {
-        return $this->strike;
+        return $this->optionPrices;
     }
 }

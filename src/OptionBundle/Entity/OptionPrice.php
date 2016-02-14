@@ -36,7 +36,7 @@ class OptionPrice
 
     /**
      * @var OptionContract
-     * @ORM\ManyToOne(targetEntity="OptionContract")
+     * @ORM\ManyToOne(targetEntity="OptionContract", inversedBy="optionPrices")
      */
     private $optionContract;
 

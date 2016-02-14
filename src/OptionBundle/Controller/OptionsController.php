@@ -41,9 +41,18 @@ class OptionsController extends Controller
 
         if ($futures) {
             $options = $this->get('optionboard.option_contract_repository')->findByFuturesAndOrderByStrike($futures);
-            $viewParameters['options'] = $options;
+
+            foreach ($options as $option) {
+                $optionId = $option->getId();
+
+                $viewParameters['options'][$optionId] = [
+                    'type'   => $option->getType(),
+                    'strike' => $option->getStrike(),
+                    'prices' => $option->getOptionPrices()->toArray(),
+                ];
+            }
         }
 
-        return $this->render('OptionBundle:Futures:index.html.twig', $viewParameters);
+        return $this->render('OptionBundle:Options:index.html.twig', $viewParameters);
     }
 }
