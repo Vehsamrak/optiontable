@@ -220,22 +220,21 @@ class PriceCollector
      */
     public function getMonthLetter(int $monthNumber): string
     {
-        $monthLetters = [
-            1  => 'F',
-            2  => 'G',
-            3  => 'H',
-            4  => 'J',
-            5  => 'K',
-            6  => 'M',
-            7  => 'N',
-            8  => 'Q',
-            9  => 'U',
-            10 => 'V',
-            11 => 'X',
-            12 => 'Z',
-        ];
+        $monthLetters = $this->getMonthMap();
 
         return $monthLetters[$monthNumber];
+    }
+
+    /**
+     * Get month number by month letter
+     * @param string $monthLetter
+     * @return int
+     */
+    public function getMonthByLetter(string $monthLetter): int
+    {
+        $monthLetters = $this->getMonthMap();
+
+        return array_search($monthLetter, $monthLetters);
     }
 
     /**
@@ -328,5 +327,28 @@ class PriceCollector
     private function makeFloat($string): float
     {
         return (float) str_replace('-', '.', $string);
+    }
+
+    /**
+     * @return array
+     */
+    private function getMonthMap()
+    {
+        $monthLetters = [
+            1  => 'F',
+            2  => 'G',
+            3  => 'H',
+            4  => 'J',
+            5  => 'K',
+            6  => 'M',
+            7  => 'N',
+            8  => 'Q',
+            9  => 'U',
+            10 => 'V',
+            11 => 'X',
+            12 => 'Z',
+        ];
+
+        return $monthLetters;
     }
 }
