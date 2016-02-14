@@ -15,7 +15,7 @@ class Futures
 {
 
     const EXPIRATION_DATE_FORMAT = 'Y-m-d';
-    const EXPIRATION_YEAR_FORMAT = 'Y';
+    const EXPIRATION_YEAR_FORMAT = 'y';
     const EXPIRATION_MONTH_FORMAT = 'n';
 
     /**
