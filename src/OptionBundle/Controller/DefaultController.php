@@ -22,6 +22,11 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('OptionBundle:Default:index.html.twig', []);
+        $futuresRepository = $this->get('optionboard.futures_repository');
+        $futures = $futuresRepository->findAll();
+
+        return $this->render('OptionBundle:Default:index.html.twig', [
+            'futuresList' => $futures,
+        ]);
     }
 }

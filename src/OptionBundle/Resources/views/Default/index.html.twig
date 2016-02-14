@@ -1,3 +1,9 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
-{% block body %}{% endblock body %}
+{% block body %}
+
+    {% for futures in futuresList %}
+        <div><a href="futures/{{ futures.symbol.symbol }}">{{ futures.symbol.symbol }}</a></div>
+    {% endfor %}
+
+{% endblock body %}

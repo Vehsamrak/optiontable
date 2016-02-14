@@ -24,4 +24,12 @@ class FuturesRepository extends AbstractRepository
             'expiration' => new \DateTime($futuresExpirationDate),
         ]);
     }
+
+    /**
+     * @return Futures[]
+     */
+    public function findAll()
+    {
+        return $this->findBy([]);
+    }
 }

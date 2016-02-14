@@ -6,9 +6,6 @@
 
 namespace OptionBundle\Service;
 
-use OptionBundle\Entity\Symbol;
-use OptionBundle\Enum\SymbolCode;
-
 class PriceCollectorTest extends \PHPUnit_Framework_TestCase
 {
 
