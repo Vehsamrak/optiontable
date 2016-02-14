@@ -2,6 +2,7 @@
 
 namespace OptionBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
 use OptionBundle\Entity\Futures;
 use OptionBundle\Entity\Symbol;
 use OptionBundle\Repository\Infrastructure\AbstractRepository;
@@ -30,6 +31,6 @@ class FuturesRepository extends AbstractRepository
      */
     public function findAll()
     {
-        return $this->findBy([]);
+        return $this->findBy([], ['symbol' => Criteria::ASC]);
     }
 }
