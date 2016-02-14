@@ -16,6 +16,7 @@ class Futures
 
     const EXPIRATION_DATE_FORMAT = 'Y-m-d';
     const EXPIRATION_YEAR_FORMAT = 'Y';
+    const EXPIRATION_MONTH_FORMAT = 'n';
 
     /**
      * @var int
@@ -61,6 +62,7 @@ class Futures
 
     /**
      * Expiration date
+     * @return string
      */
     public function getExpiration(): string
     {
@@ -69,8 +71,9 @@ class Futures
 
     /**
      * Year of expiration
+     * @return int
      */
-    public function getExpirationYear(): string
+    public function getExpirationYear(): int
     {
         return $this->expiration->format(self::EXPIRATION_YEAR_FORMAT);
     }
@@ -82,5 +85,14 @@ class Futures
     public function getSymbol(): Symbol
     {
         return $this->symbol;
+    }
+
+    /**
+     * Month of expiration
+     * @return int
+     */
+    public function getExpirationMonth(): int
+    {
+        return $this->expiration->format(self::EXPIRATION_MONTH_FORMAT);
     }
 }
