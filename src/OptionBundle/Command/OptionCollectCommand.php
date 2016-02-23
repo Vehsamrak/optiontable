@@ -56,7 +56,7 @@ class OptionCollectCommand extends ContainerAwareCommand
         foreach ($applicableSymbols as $symbolCode) {
             $symbol = $symbolRepository->findOneBySymbol($symbolCode);
 
-            for ($i = 0; $i < self::NUMBER_OF_MONTHS_TO_PARSE; $i++) {
+            for ($i = 1; $i < self::NUMBER_OF_MONTHS_TO_PARSE; $i++) {
                 $monthNumber = $currentMonth + $i;
                 $monthLetter = $priceCollector->getMonthLetter($monthNumber);
 
