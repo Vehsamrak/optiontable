@@ -41,12 +41,16 @@ class DefaultController extends Controller
 
         $futuresNames = [];
         foreach ($futuresList as $futures) {
-            $futuresNames[] = sprintf(
+            $futuresId = $futures->getId();
+
+            $futuresNames[$futuresId]['code'] = sprintf(
                 '%s%s%d',
                 $futures->getSymbol()->getSymbol(),
                 $priceCollector->getMonthLetter($futures->getExpirationMonth()),
                 $futures->getExpirationYear()
             );
+
+            $futuresNames[$futuresId]['daysToExpiration'] = $futures->getDaysToExpiration();
         }
 
         return $futuresNames;
