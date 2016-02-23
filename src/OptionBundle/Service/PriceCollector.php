@@ -77,11 +77,13 @@ class PriceCollector
     {
         $optionPrices = array_filter($this->collectOptionPrices($symbol, $monthNumber));
 
-        foreach ($optionPrices as $optionPrice) {
-            $this->em->persist($optionPrice);
-        }
+        if ($optionPrices) {
+            foreach ($optionPrices as $optionPrice) {
+                $this->em->persist($optionPrice);
+            }
 
-        $this->em->flush();
+            $this->em->flush();
+        }
     }
 
     /**
