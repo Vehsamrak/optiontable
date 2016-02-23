@@ -95,4 +95,18 @@ class Futures
     {
         return (int) $this->expiration->format(self::EXPIRATION_MONTH_FORMAT) + 1;
     }
+
+    /**
+     * @return int
+     */
+    public function getDaysToExpiration(): int
+    {
+        $now = new \DateTime();
+
+        if ($now > $this->expiration) {
+            return 0;
+        } else {
+            return $now->diff($this->expiration)->days;
+        }
+    }
 }
