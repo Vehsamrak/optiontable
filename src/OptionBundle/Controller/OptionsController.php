@@ -31,6 +31,9 @@ class OptionsController extends Controller
         $expirationMonth = $priceCollector->getMonthByLetter($expirationMonthLetter);
         $expirationYear = substr($futuresCode, 3, 2);
 
+        /** If PriceCollector::getMonthByLetter() shifts year */
+        $expirationYear = $expirationMonth == 12 ? $expirationYear - 1 : $expirationYear;
+
         $futures = $futuresRepository->findOneBySymbolAndExpirationMonthAndYear(
             $symbolCode,
             $expirationMonth,
