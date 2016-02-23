@@ -88,11 +88,11 @@ class Futures
     }
 
     /**
-     * Month of expiration
+     * Month of option contract, next month after expiration date
      * @return int
      */
     public function getExpirationMonth(): int
     {
-        return $this->expiration->format(self::EXPIRATION_MONTH_FORMAT);
+        return (int) $this->expiration->format(self::EXPIRATION_MONTH_FORMAT) + 1;
     }
 }
