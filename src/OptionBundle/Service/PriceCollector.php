@@ -228,7 +228,7 @@ class PriceCollector
     }
 
     /**
-     * Get month number by month letter
+     * Get expiration month number by option month letter
      * @param string $monthLetter
      * @return int
      */
@@ -236,7 +236,15 @@ class PriceCollector
     {
         $monthLetters = $this->getMonthMap();
 
-        return array_search($monthLetter, $monthLetters);
+        $optionMonthNumber = array_search($monthLetter, $monthLetters);
+
+        if ($optionMonthNumber == 1) {
+            $expirationMonthNumber = 12;
+        } else {
+            $expirationMonthNumber = $optionMonthNumber - 1;
+        }
+
+        return $expirationMonthNumber;
     }
 
     /**
