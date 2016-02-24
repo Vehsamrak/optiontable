@@ -5,7 +5,7 @@
 
     <style>
         td {
-            padding: 3px;
+            padding: 5px;
         }
 
         .option-type {
@@ -23,12 +23,12 @@
 
         .price.green {
             color: green;
-            font-weight: bold;
+            /*font-weight: bold;*/
         }
 
         .price.red {
             color: red;
-            font-weight: bold;
+            /*font-weight: bold;*/
         }
 
     </style>
@@ -43,6 +43,7 @@
                 <table border="1" bordercolor="lightgrey" cellspacing="0">
                     {% for price in option.prices %}
                         {% set currentOptionPrice = price.optionPrice %}
+                        {% set currentFuturesPrice = price.futuresPrice %}
 
                         {% set optionPriceColor = 'white' %}
                         {% if lastOptionPrice is defined and lastOptionPrice < currentOptionPrice %}
@@ -51,13 +52,21 @@
                             {% set optionPriceColor = 'red' %}
                         {% endif %}
 
+                        {% set futuresPriceColor = 'white' %}
+                        {% if lastFuturesPrice is defined and lastFuturesPrice < currentFuturesPrice %}
+                            {% set futuresPriceColor = 'green' %}
+                        {% elseif lastFuturesPrice is defined and lastFuturesPrice > currentFuturesPrice %}
+                            {% set futuresPriceColor = 'red' %}
+                        {% endif %}
+
                         <tr>
                             <td>{{ price.date }}</td>
-                            <td>{{ price.futuresPrice }}</td>
+                            <td class="price {{ futuresPriceColor }}">{{ price.futuresPrice }}</td>
                             <td class="price {{ optionPriceColor }}">{{ currentOptionPrice }}</td>
                         </tr>
 
                         {% set lastOptionPrice = currentOptionPrice %}
+                        {% set lastFuturesPrice = currentFuturesPrice %}
                     {% endfor %}
                 </table>
             </div>
