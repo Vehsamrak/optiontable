@@ -1,15 +1,43 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
+{% block head %}
+    {{ parent() }}
+
+    <style>
+        td {
+            padding: 3px;
+        }
+
+        .option-type {
+            display: inline-block;
+            width: 25px;
+            padding: 10px;
+        }
+
+        .option-strike {
+            display: inline-block;
+            width: 40px;
+            font-weight: bold;
+            padding: 10px;
+        }
+    </style>
+{% endblock head %}
+
 {% block body %}
     {% if options|default %}
         {% for option in options %}
             <div>
-                <span style="display: inline-block; width: 25px;">{{ option.type }}</span>
-                <span style="display: inline-block; width: 40px;">{{ option.strike }}</span>
-                {% for optionPrice in option.prices %}
-                    {{ optionPrice.futuresPrice }} -
-                    {{ optionPrice.optionPrice }} |
-                {% endfor %}
+                <span class="option-type">{{ option.type }}</span>
+                <span class="option-strike">{{ option.strike }}</span>
+                <table border="1" bordercolor="lightgrey" cellspacing="0">
+                    {% for optionPrice in option.prices %}
+                        <tr>
+                            <td>{{ optionPrice.date }}</td>
+                            <td>{{ optionPrice.futuresPrice }}</td>
+                            <td>{{ optionPrice.optionPrice }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         {% endfor %}
     {% else %}

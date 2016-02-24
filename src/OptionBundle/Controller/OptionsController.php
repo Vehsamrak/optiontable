@@ -51,7 +51,7 @@ class OptionsController extends Controller
                 $viewParameters['options'][$optionId] = [
                     'type'   => $option->getType(),
                     'strike' => $option->getStrike(),
-                    'prices' => $option->getOptionPrices()->toArray(),
+                    'prices' => $option->getOptionPrices(),
                 ];
             }
         }
