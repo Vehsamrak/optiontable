@@ -20,6 +20,17 @@
             font-weight: bold;
             padding: 10px;
         }
+
+        .price.green {
+            color: green;
+            font-weight: bold;
+        }
+
+        .price.red {
+            color: red;
+            font-weight: bold;
+        }
+
     </style>
 {% endblock head %}
 
@@ -30,12 +41,23 @@
                 <span class="option-type">{{ option.type }}</span>
                 <span class="option-strike">{{ option.strike }}</span>
                 <table border="1" bordercolor="lightgrey" cellspacing="0">
-                    {% for optionPrice in option.prices %}
+                    {% for price in option.prices %}
+                        {% set currentOptionPrice = price.optionPrice %}
+
+                        {% set optionPriceColor = 'white' %}
+                        {% if lastOptionPrice is defined and lastOptionPrice < currentOptionPrice %}
+                            {% set optionPriceColor = 'green' %}
+                        {% elseif lastOptionPrice is defined and lastOptionPrice > currentOptionPrice %}
+                            {% set optionPriceColor = 'red' %}
+                        {% endif %}
+
                         <tr>
-                            <td>{{ optionPrice.date }}</td>
-                            <td>{{ optionPrice.futuresPrice }}</td>
-                            <td>{{ optionPrice.optionPrice }}</td>
+                            <td>{{ price.date }}</td>
+                            <td>{{ price.futuresPrice }}</td>
+                            <td class="price {{ optionPriceColor }}">{{ currentOptionPrice }}</td>
                         </tr>
+
+                        {% set lastOptionPrice = currentOptionPrice %}
                     {% endfor %}
                 </table>
             </div>
