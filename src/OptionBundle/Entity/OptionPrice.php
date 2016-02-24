@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OptionPrice
 {
 
-    const DATE_FORMAT = 'Y-m-d';
+    const DATE_FORMAT = 'Y-m-d H:i';
 
     /**
      * @var int
