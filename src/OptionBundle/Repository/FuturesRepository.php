@@ -15,9 +15,9 @@ class FuturesRepository extends AbstractRepository
     /**
      * @param Symbol $symbol
      * @param string $futuresExpirationDate
-     * @return Futures
+     * @return Futures|null
      */
-    public function findOneBySymbolAndExpiration(Symbol $symbol, string $futuresExpirationDate): Futures
+    public function findOneBySymbolAndExpiration(Symbol $symbol, string $futuresExpirationDate)
     {
         return $this->findOneBy([
             'symbol'     => $symbol->getSymbol(),
