@@ -9,9 +9,6 @@ use OptionBundle\Entity\Futures;
 use OptionBundle\Entity\Symbol;
 use OptionBundle\Repository\Infrastructure\AbstractRepository;
 
-/**
- * FuturesRepository
- */
 class FuturesRepository extends AbstractRepository
 {
 
@@ -48,8 +45,7 @@ class FuturesRepository extends AbstractRepository
         string $symbolCode,
         int $expirationMonth,
         int $expirationYear
-    ): Futures
-    {
+    ) {
 
         $expirationMonth = str_pad($expirationMonth, 2, 0, STR_PAD_LEFT);
 
