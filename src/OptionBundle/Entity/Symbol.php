@@ -7,7 +7,7 @@ use OptionBundle\Enum\SymbolCode;
 use OptionBundle\Exception\WrongSymbol;
 
 /**
- * Symbol
+ * Торговый символ
  * @ORM\Table(name="symbol")
  * @ORM\Entity(repositoryClass="OptionBundle\Repository\SymbolRepository")
  */
