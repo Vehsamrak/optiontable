@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Trade
 {
 
+    const DIRECTION_SELL = 'sell';
+    const DIRECTION_BUY = 'buy';
+
     /**
      * @var int
      * @ORM\Column(name="id", type="integer")
@@ -19,6 +22,13 @@ class Trade
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * Направление сделки
+     * @var int
+     * @ORM\Column(name="direction", type="string", length=4, nullable=false)
+     */
+    private $direction;
 
     /**
      * @var OptionPrice
@@ -49,15 +59,23 @@ class Trade
     private $lowPrice;
 
     /**
+     * Объем сделки. Количество контрактов
+     * @var int
+     * @ORM\Column(name="volume", type="integer", nullable=false)
+     */
+    private $volume;
+
+    /**
      * @param OptionPrice $openPrice
      */
-    public function __construct(OptionPrice $openPrice)
+    public function __construct(string $direction, OptionPrice $openPrice, int $volume)
     {
+        $this->direction = $direction;
         $this->openPrice = $openPrice;
         $this->highPrice = $openPrice;
         $this->lowPrice = $openPrice;
+        $this->volume = $volume;
     }
-
 
     /**
      * Get id
@@ -66,6 +84,14 @@ class Trade
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDirection()
+    {
+        return $this->direction;
     }
 
     /**
@@ -138,5 +164,13 @@ class Trade
         $this->lowPrice = $lowPrice;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVolume()
+    {
+        return $this->volume;
     }
 }

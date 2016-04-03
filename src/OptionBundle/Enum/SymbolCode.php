@@ -1,17 +1,15 @@
 <?php
-/**
- * Author: Vehsamrak
- * Date Created: 06.02.16 18:42
- */
-
 namespace OptionBundle\Enum;
+
 use MyCLabs\Enum\Enum;
 
 /**
  * Enumerated symbol codes
+ * @author Vehsamrak
  */
 class SymbolCode extends Enum
 {
+
     // Energies
     const CRUDE_OIL_WTI = 'CL';
     const ULSD_NY_HARBOR = 'HO';
