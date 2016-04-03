@@ -48,6 +48,16 @@ class Trade
      */
     private $lowPrice;
 
+    /**
+     * @param OptionPrice $openPrice
+     */
+    public function __construct(OptionPrice $openPrice)
+    {
+        $this->openPrice = $openPrice;
+        $this->highPrice = $openPrice;
+        $this->lowPrice = $openPrice;
+    }
+
 
     /**
      * Get id
@@ -65,18 +75,6 @@ class Trade
     public function getOpenPrice()
     {
         return $this->openPrice;
-    }
-
-    /**
-     * Set openPrice
-     * @param string $openPrice
-     * @return Trade
-     */
-    public function setOpenPrice($openPrice)
-    {
-        $this->openPrice = $openPrice;
-
-        return $this;
     }
 
     /**
