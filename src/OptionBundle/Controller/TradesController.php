@@ -22,7 +22,7 @@ class TradesController extends Controller
     {
         $tradesRepository = $this->get('optionboard.trade_repository');
 
-        return $this->render('OptionBundle:Default:trades.html.twig', [
+        return $this->render('OptionBundle:Trades:trades.html.twig', [
             'openedTrades' => $tradesRepository->findAllOpenedTrades(),
             'closedTrades' => $tradesRepository->findAllClosedTrades(),
         ]);
