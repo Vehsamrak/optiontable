@@ -28,7 +28,7 @@
                     <td>{{ futures.symbol.symbol }}</td>
                     <td>{{ futures.expiration }} ({{ futures.daysToExpiration }})</td>
                     <td>{{ openedTrade.direction }} {{ openedPrice.optionContract.type }}</td>
-                    <td>{{ openedPrice.date }}</td>
+                    <td>{{ openedPrice.day }}</td>
                     <td>{{ openedTrade.volume }}</td>
                     <td>{{ openedPrice.optionPrice }}</td>
                     <td>{{ highOptionPrice }}</td>
@@ -73,18 +73,26 @@
                     {% set tradeResult = openedOptionPrice - closedOptionPrice %}
                 {% endif %}
 
+                {% set tradeResultMoney = tradeResult * closedTrade.volume * optionPointPrice %}
+
+                {% if tradeResultMoney > 0 %}
+                    {% set tradeResultColor = "bg-green" %}
+                {% else %}
+                    {% set tradeResultColor = "bg-red" %}
+                {% endif %}
+
                 <tr>
                     <td>{{ futures.symbol.symbol }}</td>
                     <td>{{ futures.expiration }}</td>
                     <td>{{ closedTrade.direction }} {{ closedPrice.optionContract.type }}</td>
                     <td>{{ closedTrade.volume }}</td>
-                    <td>{{ openedPrice.date }}</td>
-                    <td>{{ closedPrice.date }}</td>
+                    <td>{{ openedPrice.day }}</td>
+                    <td>{{ closedPrice.day }}</td>
                     <td>{{ openedOptionPrice }}</td>
                     <td>{{ closedOptionPrice }}</td>
                     <td>{{ highOptionPrice }}</td>
                     <td>{{ lowOptionPrice }}</td>
-                    <td>{{ tradeResult * closedTrade.volume * optionPointPrice }}</td>
+                    <td class="{{ tradeResultColor }}">{{ tradeResultMoney }} $</td>
                 </tr>
             {% endfor %}
         </table>

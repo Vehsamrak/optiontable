@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class OptionPrice
 {
 
-    const DATE_FORMAT = 'Y-m-d H:i';
+    const DATE_FORMAT_DAY_HOUR = 'Y-m-d H:i';
+    const DATE_FORMAT_DAY = 'Y-m-d';
 
     /**
      * @var int
@@ -95,7 +96,15 @@ class OptionPrice
      */
     public function getDate(): string
     {
-        return $this->date->format(self::DATE_FORMAT);
+        return $this->date->format(self::DATE_FORMAT_DAY_HOUR);
+    }
+    
+    /**
+     * @return string
+     */
+    public function getDay(): string
+    {
+        return $this->date->format(self::DATE_FORMAT_DAY);
     }
 
     /**
