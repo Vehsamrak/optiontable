@@ -5,6 +5,7 @@ namespace OptionBundle\Repository;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use OptionBundle\Entity\OptionPrice;
+use OptionBundle\Exception\PriceNotFound;
 use OptionBundle\Repository\Infrastructure\AbstractRepository;
 
 class OptionPriceRepository extends AbstractRepository
@@ -56,10 +57,17 @@ class OptionPriceRepository extends AbstractRepository
 
     /**
      * @param int $optionPriceId
-     * @return OptionPrice|null
+     * @return OptionPrice
+     * @throws PriceNotFound
      */
     public function findOptionPriceById(int $optionPriceId)
     {
-        return $this->find($optionPriceId);
+        $price = $this->find($optionPriceId);
+        
+        if (!$price) {
+        	throw new PriceNotFound();
+        }
+        
+        return $price;
     }
 }

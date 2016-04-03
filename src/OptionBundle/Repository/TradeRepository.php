@@ -3,6 +3,7 @@
 namespace OptionBundle\Repository;
 
 use OptionBundle\Entity\Trade;
+use OptionBundle\Exception\TradeNotFound;
 use OptionBundle\Repository\Infrastructure\AbstractRepository;
 
 /**
@@ -21,10 +22,27 @@ class TradeRepository extends AbstractRepository
 
     /**
      * @param $tradeId
-     * @return Trade|null
+     * @return Trade
+     * @throws TradeNotFound
      */
     public function findTradeById($tradeId)
     {
-        return $this->find($tradeId);
+        $trade = $this->find($tradeId);
+
+        if (!$trade) {
+            throw new TradeNotFound();
+        }
+
+        return $trade;
+    }
+
+    /**
+     * @return Trade[]
+     */
+    public function findAllOpenedTrades()
+    {
+        return $this->findBy([
+            'closePrice' => null,
+        ]);
     }
 }
