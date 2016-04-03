@@ -1,6 +1,6 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
-{% block body %}
+{% block content %}
     {% if options|default %}
         {% for option in options %}
             <div>
@@ -40,4 +40,4 @@
     {% else %}
         <div>No options was found.</div>
     {% endif %}
-{% endblock body %}
+{% endblock content %}

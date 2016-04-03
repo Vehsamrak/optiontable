@@ -12,6 +12,18 @@
                 padding: 5px;
             }
 
+            .right-menu {
+                top: 20px;
+                right: 30px;
+                position: absolute;
+            }
+
+            .right-menu a {
+                display: block;
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+
             .option-type {
                 display: inline-block;
                 width: 25px;
@@ -38,6 +50,14 @@
 </head>
 <body>
 {% block body %}
+    <div class="right-menu">
+        {% block right_menu %}
+            <a href="{{ path('option_trades_list') }}">Мониторинг сделок</a>
+            <a href="{{ path('option_options_list') }}">Список контрактов</a>
+        {% endblock right_menu %}
+    </div>
+
+    {% block content %}{% endblock content %}
 {% endblock body %}
 </body>
 </html>

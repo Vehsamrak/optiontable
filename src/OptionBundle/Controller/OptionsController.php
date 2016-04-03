@@ -20,7 +20,7 @@ class OptionsController extends Controller
     public function indexAction()
     {
         $futuresRepository = $this->get('optionboard.futures_repository');
-        $futures = $futuresRepository->findAll();
+        $futures = $futuresRepository->findNotExpiratedFutures();
 
         return $this->render('OptionBundle:Options:index.html.twig', [
             'futuresList' => $this->getFuturesNames($futures),
@@ -37,7 +37,8 @@ class OptionsController extends Controller
         $futures = $futuresRepository->findAll();
 
         return $this->render('OptionBundle:Options:index.html.twig', [
-            'futuresList' => $this->getFuturesNames($futures),
+            'futuresList'   => $this->getFuturesNames($futures),
+            'showExpirated' => true,
         ]);
     }
 

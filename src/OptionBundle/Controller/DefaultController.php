@@ -3,7 +3,7 @@
 namespace OptionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -15,10 +15,10 @@ class DefaultController extends Controller
 
     /**
      * @Route("/", name="option_index")
-     * @return Response
+     * @return RedirectResponse
      */
     public function indexAction()
     {
-        return $this->render('OptionBundle:Default:index.html.twig');
+        return $this->redirectToRoute('option_trades_list');
     }
 }

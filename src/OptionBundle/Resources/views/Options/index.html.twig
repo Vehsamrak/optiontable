@@ -1,6 +1,15 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
-{% block body %}
+{% block right_menu %}
+    {{ parent() }}
+        {% if showExpirated is not defined %}
+            <a href="{{ path('option_options_all') }}">Показать эксперированные</a>
+        {% else %}
+            <a href="{{ path('option_options_list') }}">Скрыть эксперированные</a>
+        {% endif %}
+{% endblock right_menu %}
+
+{% block content %}
     <h3>Список контрактов:</h3>
 
     {% for futures in futuresList %}
@@ -13,4 +22,4 @@
         </div>
     {% endfor %}
 
-{% endblock body %}
+{% endblock content %}

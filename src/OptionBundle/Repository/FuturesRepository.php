@@ -62,4 +62,17 @@ class FuturesRepository extends AbstractRepository
 
         return $queryBuilder->getQuery()->getSingleResult();
     }
+
+    /**
+     * @return Futures[]
+     */
+    public function findNotExpiratedFutures()
+    {
+        $queryBuilder = $this->createQueryBuilder('futures');
+        $queryBuilder->where($queryBuilder->expr()->gt('futures.expiration', ':datetine_now'));
+        $queryBuilder->setParameter('datetine_now', new \DateTime());
+        $queryBuilder->addOrderBy('futures.symbol', Criteria::ASC);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
