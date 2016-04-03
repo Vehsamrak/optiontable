@@ -15,10 +15,14 @@
                 <td>открытие</td>
                 <td>объем</td>
                 <td>цена</td>
+                <td>высшая цена</td>
+                <td>низшая цена</td>
             </tr>
             {% for openedTrade in openedTrades %}
                 {% set futures = openedTrade.openPrice.optionContract.futures %}
                 {% set openedPrice = openedTrade.openPrice %}
+                {% set highOptionPrice = openedTrade.highPrice.optionPrice %}
+                {% set lowOptionPrice = openedTrade.lowPrice.optionPrice %}
 
                 <tr>
                     <td>{{ futures.symbol.symbol }}</td>
@@ -27,6 +31,8 @@
                     <td>{{ openedPrice.date }}</td>
                     <td>{{ openedTrade.volume }}</td>
                     <td>{{ openedPrice.optionPrice }}</td>
+                    <td>{{ highOptionPrice }}</td>
+                    <td>{{ lowOptionPrice }}</td>
                 </tr>
             {% endfor %}
         </table>
