@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    {% if trades is empty %}
+    {% if openedTrades is empty %}
         <h3>Открытых сделок нет</h3>
     {% else %}
         <h3>Открытые сделки:</h3>
@@ -12,20 +12,67 @@
                 <td>фьючерс</td>
                 <td>экспирация</td>
                 <td>тип</td>
-                <td>открыт</td>
+                <td>открытие</td>
                 <td>объем</td>
                 <td>цена</td>
             </tr>
-            {% for trade in trades %}
-                {% set futures = trade.openPrice.optionContract.futures %}
+            {% for openedTrade in openedTrades %}
+                {% set futures = openedTrade.openPrice.optionContract.futures %}
+                {% set openedPrice = openedTrade.openPrice %}
 
                 <tr>
                     <td>{{ futures.symbol.symbol }}</td>
                     <td>{{ futures.expiration }} ({{ futures.daysToExpiration }})</td>
-                    <td>{{ trade.direction }} {{ trade.openPrice.optionContract.type }}</td>
-                    <td>{{ trade.openPrice.date }}</td>
-                    <td>{{ trade.volume }}</td>
-                    <td>{{ trade.openPrice.optionPrice }}</td>
+                    <td>{{ openedTrade.direction }} {{ openedPrice.optionContract.type }}</td>
+                    <td>{{ openedPrice.date }}</td>
+                    <td>{{ openedTrade.volume }}</td>
+                    <td>{{ openedPrice.optionPrice }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if closedTrades is empty %}
+        <h3>Закрытых сделок нет</h3>
+    {% else %}
+        <h3>Закрытые сделки:</h3>
+
+        <table border="1" bordercolor="lightgrey" cellspacing="0">
+            <tr>
+                <td>фьючерс</td>
+                <td>экспирация</td>
+                <td>тип</td>
+                <td>открытие</td>
+                <td>закрытие</td>
+                <td>объем</td>
+                <td>цена открытия</td>
+                <td>цена закрытия</td>
+                <td>результат</td>
+            </tr>
+            {% for closedTrade in closedTrades %}
+                {% set futures = closedTrade.closePrice.optionContract.futures %}
+                {% set optionPointPrice = futures.symbol.optionPointPrice %}
+                {% set openedPrice = closedTrade.openPrice %}
+                {% set closedPrice = closedTrade.closePrice %}
+                {% set openedOptionPrice = openedPrice.optionPrice %}
+                {% set closedOptionPrice = closedPrice.optionPrice %}
+
+                {% if closedTrade.directionBuy %}
+                    {% set tradeResult = closedOptionPrice - openedOptionPrice %}
+                {% else %}
+                    {% set tradeResult = openedOptionPrice - closedOptionPrice %}
+                {% endif %}
+
+                <tr>
+                    <td>{{ futures.symbol.symbol }}</td>
+                    <td>{{ futures.expiration }}</td>
+                    <td>{{ closedTrade.direction }} {{ closedPrice.optionContract.type }}</td>
+                    <td>{{ openedPrice.date }}</td>
+                    <td>{{ closedPrice.date }}</td>
+                    <td>{{ closedTrade.volume }}</td>
+                    <td>{{ openedOptionPrice }}</td>
+                    <td>{{ closedOptionPrice }}</td>
+                    <td>{{ tradeResult * closedTrade.volume * optionPointPrice }}</td>
                 </tr>
             {% endfor %}
         </table>

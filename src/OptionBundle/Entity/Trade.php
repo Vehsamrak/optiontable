@@ -3,6 +3,7 @@
 namespace OptionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OptionBundle\Enum\TradeDirection;
 
 /**
  * Торговая сделка
@@ -153,5 +154,21 @@ class Trade
     public function getVolume()
     {
         return $this->volume;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDirectionBuy()
+    {
+        return $this->direction == TradeDirection::DIRECTION_BUY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDirectionSell()
+    {
+        return $this->direction == TradeDirection::DIRECTION_SELL;
     }
 }

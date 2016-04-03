@@ -45,4 +45,15 @@ class TradeRepository extends AbstractRepository
             'closePrice' => null,
         ]);
     }
+
+    /**
+     * @return Trade[]
+     */
+    public function findAllClosedTrades()
+    {
+        $queryBuilder = $this->createQueryBuilder('trades');
+        $queryBuilder->where($queryBuilder->expr()->isNotNull('trades.closePrice'));
+        
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

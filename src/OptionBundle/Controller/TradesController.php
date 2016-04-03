@@ -21,10 +21,10 @@ class TradesController extends Controller
     public function openedTradesAction()
     {
         $tradesRepository = $this->get('optionboard.trade_repository');
-        $trades = $tradesRepository->findAllOpenedTrades();
 
         return $this->render('OptionBundle:Default:trades.html.twig', [
-            'trades' => $trades,
+            'openedTrades' => $tradesRepository->findAllOpenedTrades(),
+            'closedTrades' => $tradesRepository->findAllClosedTrades(),
         ]);
     }
 
