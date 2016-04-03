@@ -13,6 +13,7 @@
                 <td>экспирация</td>
                 <td>тип</td>
                 <td>открыт</td>
+                <td>объем</td>
                 <td>цена</td>
             </tr>
             {% for trade in trades %}
@@ -23,6 +24,7 @@
                     <td>{{ futures.expiration }} ({{ futures.daysToExpiration }})</td>
                     <td>{{ trade.direction }} {{ trade.openPrice.optionContract.type }}</td>
                     <td>{{ trade.openPrice.date }}</td>
+                    <td>{{ trade.volume }}</td>
                     <td>{{ trade.openPrice.optionPrice }}</td>
                 </tr>
             {% endfor %}
