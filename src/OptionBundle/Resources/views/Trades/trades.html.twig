@@ -14,25 +14,32 @@
                 <td>тип</td>
                 <td>открытие</td>
                 <td>объем</td>
-                <td>цена</td>
+                <td>цена фьючерса</td>
+                <td>цена открытия</td>
+                <td>текущая цена</td>
                 <td>высшая цена</td>
                 <td>низшая цена</td>
+                <td>результат</td>
             </tr>
             {% for openedTrade in openedTrades %}
-                {% set futures = openedTrade.openPrice.optionContract.futures %}
-                {% set openedPrice = openedTrade.openPrice %}
-                {% set highOptionPrice = openedTrade.highPrice.optionPrice %}
-                {% set lowOptionPrice = openedTrade.lowPrice.optionPrice %}
+                {% if openedTrade.profit > 0 %}
+                    {% set tradeResultColor = "bg-green" %}
+                {% else %}
+                    {% set tradeResultColor = "bg-red" %}
+                {% endif %}
 
                 <tr>
-                    <td>{{ futures.symbol.symbol }}</td>
-                    <td>{{ futures.expiration }} ({{ futures.daysToExpiration }})</td>
-                    <td>{{ openedTrade.direction }} {{ openedPrice.optionContract.type }}</td>
-                    <td>{{ openedPrice.day }}</td>
+                    <td>{{ openedTrade.futures }}</td>
+                    <td>{{ openedTrade.expiration }}</td>
+                    <td>{{ openedTrade.type }}</td>
+                    <td>{{ openedTrade.openDate }}</td>
                     <td>{{ openedTrade.volume }}</td>
-                    <td>{{ openedPrice.optionPrice }}</td>
-                    <td>{{ highOptionPrice }}</td>
-                    <td>{{ lowOptionPrice }}</td>
+                    <td>{{ openedTrade.futuresPrice }}</td>
+                    <td>{{ openedTrade.openPrice }}</td>
+                    <td>{{ openedTrade.currentPrice }}</td>
+                    <td>{{ openedTrade.highPrice }}</td>
+                    <td>{{ openedTrade.lowPrice }}</td>
+                    <td class="{{ tradeResultColor }}">{{ openedTrade.profit }} $</td>
                 </tr>
             {% endfor %}
         </table>

@@ -248,6 +248,20 @@ class PriceCollector
     }
 
     /**
+     * @param Futures $futures
+     * @return string Futures full codename
+     */
+    public function getFuturesName(Futures $futures): string
+    {
+        return sprintf(
+            '%s%s%d',
+            $futures->getSymbol()->getSymbol(),
+            $this->getMonthLetter($futures->getExpirationMonth()),
+            $futures->getExpirationYear()
+        );
+    }
+
+    /**
      * @param Symbol $symbol
      * @param int    $monthNumber
      * @return string

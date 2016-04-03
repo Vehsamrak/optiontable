@@ -23,7 +23,7 @@ class Trade
 
     /**
      * Направление сделки
-     * @var int
+     * @var string
      * @ORM\Column(name="direction", type="string", length=4, nullable=false)
      */
     private $direction;
@@ -85,7 +85,7 @@ class Trade
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getDirection()
     {
