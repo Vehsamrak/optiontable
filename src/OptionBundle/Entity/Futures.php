@@ -5,7 +5,7 @@ namespace OptionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Futures contract
+ * Фьючерсный контракт
  * @ORM\Table(name="futures", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="unique_futures_expiration_symbol", columns={"expiration", "symbol"})
  * })

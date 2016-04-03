@@ -8,7 +8,7 @@ use Doctrine\ORM\PersistentCollection;
 use OptionBundle\Exception\WrongOptionType;
 
 /**
- * OptionContract
+ * Опционный контракт
  * @ORM\Table(name="option_contract", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="unique_option_type_futures_strike", columns={"type", "futures_id", "strike"})
  * })

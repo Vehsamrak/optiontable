@@ -5,7 +5,7 @@ namespace OptionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Option price
+ * Цена опциона
  * @ORM\Table(name="option_price")
  * @ORM\Entity(repositoryClass="OptionBundle\Repository\OptionPriceRepository")
  */
