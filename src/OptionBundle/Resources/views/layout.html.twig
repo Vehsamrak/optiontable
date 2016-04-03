@@ -6,6 +6,34 @@
                 Option Table Trading Charts {% block title %}{% endblock title %}
             {% endblock root_title %}
         </title>
+
+        <style>
+            td {
+                padding: 5px;
+            }
+
+            .option-type {
+                display: inline-block;
+                width: 25px;
+                padding: 10px;
+            }
+
+            .option-strike {
+                display: inline-block;
+                width: 40px;
+                font-weight: bold;
+                padding: 10px;
+            }
+
+            .price.green {
+                color: green;
+            }
+
+            .price.red {
+                color: red;
+            }
+
+        </style>
     {% endblock head %}
 </head>
 <body>

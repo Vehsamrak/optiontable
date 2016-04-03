@@ -1,39 +1,5 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
-{% block head %}
-    {{ parent() }}
-
-    <style>
-        td {
-            padding: 5px;
-        }
-
-        .option-type {
-            display: inline-block;
-            width: 25px;
-            padding: 10px;
-        }
-
-        .option-strike {
-            display: inline-block;
-            width: 40px;
-            font-weight: bold;
-            padding: 10px;
-        }
-
-        .price.green {
-            color: green;
-            /*font-weight: bold;*/
-        }
-
-        .price.red {
-            color: red;
-            /*font-weight: bold;*/
-        }
-
-    </style>
-{% endblock head %}
-
 {% block body %}
     {% if options|default %}
         {% for option in options %}

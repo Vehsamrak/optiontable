@@ -7,9 +7,26 @@
     {% else %}
         <h3>Открытые сделки:</h3>
 
-        {% for trade in trades %}
-            <div>{{ trade.id }}</div>
-        {% endfor %}
+        <table border="1" bordercolor="lightgrey" cellspacing="0">
+            <tr>
+                <td>фьючерс</td>
+                <td>экспирация</td>
+                <td>тип</td>
+                <td>открыт</td>
+                <td>цена</td>
+            </tr>
+            {% for trade in trades %}
+                {% set futures = trade.openPrice.optionContract.futures %}
+
+                <tr>
+                    <td>{{ futures.symbol.symbol }}</td>
+                    <td>{{ futures.expiration }} ({{ futures.daysToExpiration }})</td>
+                    <td>{{ trade.direction }} {{ trade.openPrice.optionContract.type }}</td>
+                    <td>{{ trade.openPrice.date }}</td>
+                    <td>{{ trade.openPrice.optionPrice }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     {% endif %}
 
 {% endblock body %}
