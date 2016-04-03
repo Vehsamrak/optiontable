@@ -2,8 +2,10 @@
 
 namespace OptionBundle\Service;
 
-use OptionBundle\Entity\OptionPrice;
 use OptionBundle\Entity\Trade;
+use OptionBundle\Enum\TradeDirection;
+use OptionBundle\Exception\InvalidTradeDirection;
+use OptionBundle\Exception\PriceNotFound;
 use OptionBundle\Exception\TradeNotFound;
 use OptionBundle\Repository\OptionPriceRepository;
 use OptionBundle\Repository\TradeRepository;
@@ -33,14 +35,21 @@ class Trader
 
     /**
      * Открытие сделки и запись ее в БД
-     * @param int $optionPriceId
-     * @return bool
+     * @param string $direction
+     * @param int    $optionPriceId
+     * @param int    $volume
+     * @throws InvalidTradeDirection
+     * @throws PriceNotFound
      */
-    public function openTrade(int $optionPriceId)
+    public function openTrade(string $direction, int $optionPriceId, int $volume)
     {
+        if (!TradeDirection::isValid($direction)) {
+        	throw new InvalidTradeDirection();
+        }
+        
         $optionPrice = $this->optionPriceRepository->findOptionPriceById($optionPriceId);
 
-        $trade = new Trade($optionPrice);
+        $trade = new Trade($direction, $optionPrice, $volume);
         $this->tradeRepository->persist($trade);
         $this->tradeRepository->flush($trade);
     }

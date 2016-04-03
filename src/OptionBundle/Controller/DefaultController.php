@@ -48,13 +48,13 @@ class DefaultController extends Controller
 
     /**
      * Открыть сделку с заданной ценой
-     * @Route("/trades/open/{optionPriceId}")
+     * @Route("/trades/open/{direction}/{optionPriceId}/{volume}")
      * @return Response
      */
-    public function openTradeAction(int $optionPriceId)
+    public function openTradeAction(string $direction, int $optionPriceId, int $volume)
     {
         $trader = $this->get('optionboard.trader');
-        $trader->openTrade($optionPriceId);
+        $trader->openTrade($direction, $optionPriceId, $volume);
 
         return $this->redirectToRoute('option_default_openedtrades');
     }
