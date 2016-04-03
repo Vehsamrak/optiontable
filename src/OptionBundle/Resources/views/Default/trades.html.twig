@@ -1,0 +1,15 @@
+{% extends 'OptionBundle::layout.html.twig' %}
+
+{% block body %}
+
+    {% if trades is empty %}
+        <h3>Открытых сделок нет</h3>
+    {% else %}
+        <h3>Открытые сделки:</h3>
+
+        {% for trade in trades %}
+            <div>{{ trade.id }}</div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock body %}

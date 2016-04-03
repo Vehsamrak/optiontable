@@ -32,6 +32,49 @@ class DefaultController extends Controller
     }
 
     /**
+     * Список открытых сделок
+     * @Route("/trades")
+     * @return Response
+     */
+    public function openedTradesAction()
+    {
+        $tradesRepository = $this->get('optionboard.trade_repository');
+        $trades = $tradesRepository->findAllOpenedTrades();
+
+        return $this->render('OptionBundle:Default:trades.html.twig', [
+            'trades' => $trades, 
+        ]);
+    }
+
+    /**
+     * Открыть сделку с заданной ценой
+     * @Route("/trades/open/{optionPriceId}")
+     * @return Response
+     */
+    public function openTradeAction(int $optionPriceId)
+    {
+        $trader = $this->get('optionboard.trader');
+        $trader->openTrade($optionPriceId);
+
+        return $this->redirectToRoute('option_default_openedtrades');
+    }
+
+    /**
+     * Закрыть определенную сделку по заданной цене
+     * @Route("/trades/close/{tradeId}/{optionPriceId}")
+     * @param int $tradeId
+     * @param int $optionPriceId
+     * @return Response
+     */
+    public function closeTradeAction(int $tradeId, int $optionPriceId)
+    {
+        $trader = $this->get('optionboard.trader');
+        $trader->closeTrade($tradeId, $optionPriceId);
+
+        return $this->redirectToRoute('option_default_openedtrades');
+    }
+
+    /**
      * @param Futures[] $futuresList
      * @return array Futures full names
      */
