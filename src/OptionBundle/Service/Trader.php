@@ -36,38 +36,27 @@ class Trader
      * @param int $optionPriceId
      * @return bool
      */
-    public function openTrade(int $optionPriceId): bool
+    public function openTrade(int $optionPriceId)
     {
         $optionPrice = $this->optionPriceRepository->findOptionPriceById($optionPriceId);
-
-        if (!$optionPrice) {
-            return false;
-        }
 
         $trade = new Trade($optionPrice);
         $this->tradeRepository->persist($trade);
         $this->tradeRepository->flush($trade);
-
-        return true;
     }
 
     /**
      * @param int         $tradeId
-     * @param OptionPrice $optionPriceClose
+     * @param int $optionPriceCloseId
      * @return bool
      * @throws TradeNotFound
      */
-    public function closeTrade(int $tradeId, OptionPrice $optionPriceClose): bool
+    public function closeTrade(int $tradeId, int $optionPriceCloseId)
     {
         $trade = $this->tradeRepository->findTradeById($tradeId);
-        
-        if (!$trade) {
-        	throw new TradeNotFound();
-        }
+        $optionPriceClose = $this->optionPriceRepository->findOptionPriceById($optionPriceCloseId);
         
         $trade->setClosePrice($optionPriceClose);
         $this->tradeRepository->flush($trade);
-        
-        return true;
     }
 }
