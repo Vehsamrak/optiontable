@@ -50,6 +50,7 @@ class OptionCollectCommand extends ContainerAwareCommand
         $container = $this->getContainer();
         $symbolRepository = $container->get('optionboard.symbol_repository');
         $priceCollector = $container->get('optionboard.price_collector');
+        $trader = $container->get('optionboard.trader');
 
         $applicableSymbols = $this->getApplicableSymbols($symbolOffset, $symbolLimit);
 
@@ -65,7 +66,14 @@ class OptionCollectCommand extends ContainerAwareCommand
             }
         }
 
-        $output->writeln(sprintf('Option prices were saved. It takes %d seconds.', microtime(true) - $startTime));
+        $output->writeln('Option prices were saved.');
+
+        $output->write('Updating opened trades highs and lows ...');
+
+        $updatedTradesCount = $trader->updateOpenedTradesHighsAndLows();
+        $output->writeln(sprintf('%s trades were updated.', $updatedTradesCount));
+
+        $output->writeln(sprintf('It takes %d seconds.', microtime(true) - $startTime));
     }
 
     /**

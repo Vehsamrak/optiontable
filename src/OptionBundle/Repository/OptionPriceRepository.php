@@ -2,8 +2,10 @@
 
 namespace OptionBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query\Expr;
 use OptionBundle\Entity\OptionPrice;
 use OptionBundle\Exception\PriceNotFound;
 use OptionBundle\Repository\Infrastructure\AbstractRepository;
@@ -69,5 +71,21 @@ class OptionPriceRepository extends AbstractRepository
         }
         
         return $price;
+    }
+
+    /**
+     * Найти текущую (последнюю) цену опционного контракта
+     * @param int $optionId
+     * @return OptionPrice
+     */
+    public function findOptionCurrentPrice(int $optionId): OptionPrice
+    {
+        $queryBuilder = $this->createQueryBuilder('option_price');
+        $queryBuilder->where('option_price.optionContract = :optionId');
+        $queryBuilder->addOrderBy('option_price.date', Criteria::DESC);
+        $queryBuilder->setParameter('optionId', $optionId);
+        $queryBuilder->setMaxResults(1);
+
+        return $queryBuilder->getQuery()->getSingleResult();
     }
 }

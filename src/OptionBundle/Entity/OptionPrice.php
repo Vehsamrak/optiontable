@@ -83,7 +83,6 @@ class OptionPrice
     }
 
     /**
-     * Get id
      * @return int
      */
     public function getId(): int
@@ -92,7 +91,6 @@ class OptionPrice
     }
 
     /**
-     * Get date
      * @return string
      */
     public function getDate(): string
@@ -101,7 +99,6 @@ class OptionPrice
     }
 
     /**
-     * Get optionPrice
      * @return float
      */
     public function getOptionPrice(): float
@@ -110,7 +107,6 @@ class OptionPrice
     }
 
     /**
-     * Get optionContract
      * @return OptionContract
      */
     public function getOptionContract(): OptionContract
@@ -119,7 +115,6 @@ class OptionPrice
     }
 
     /**
-     * Get futuresPrice
      * @return float
      */
     public function getFuturesPrice(): float
@@ -128,7 +123,6 @@ class OptionPrice
     }
 
     /**
-     * Get futuresPrice52WeekHigh
      * @return float
      */
     public function getFuturesPrice52WeekHigh(): float
@@ -137,11 +131,30 @@ class OptionPrice
     }
 
     /**
-     * Get futuresPrice52WeekLow
      * @return float
      */
     public function getFuturesPrice52WeekLow(): float
     {
         return $this->futuresPrice52WeekLow;
+    }
+
+    /**
+     * Сравнение двух опционных цен
+     * @param OptionPrice $comparableOptionPrice
+     * @return bool
+     */
+    public function isGreaterThan(OptionPrice $comparableOptionPrice): bool
+    {
+        return $this->getOptionPrice() > $comparableOptionPrice->getOptionPrice();
+    }
+    
+    /**
+     * Сравнение двух опционных цен
+     * @param OptionPrice $comparableOptionPrice
+     * @return bool
+     */
+    public function isLowerThan(OptionPrice $comparableOptionPrice): bool
+    {
+        return $this->getOptionPrice() < $comparableOptionPrice->getOptionPrice();
     }
 }

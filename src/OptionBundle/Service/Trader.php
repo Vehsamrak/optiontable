@@ -44,18 +44,20 @@ class Trader
     public function openTrade(string $direction, int $optionPriceId, int $volume)
     {
         if (!TradeDirection::isValid($direction)) {
-        	throw new InvalidTradeDirection();
+            throw new InvalidTradeDirection();
         }
-        
+
         $optionPrice = $this->optionPriceRepository->findOptionPriceById($optionPriceId);
 
         $trade = new Trade($direction, $optionPrice, $volume);
+
         $this->tradeRepository->persist($trade);
         $this->tradeRepository->flush($trade);
     }
 
     /**
-     * @param int         $tradeId
+     * Закрытие сделки и запись результатов в БД
+     * @param int $tradeId
      * @param int $optionPriceCloseId
      * @return bool
      * @throws TradeNotFound
@@ -64,8 +66,36 @@ class Trader
     {
         $trade = $this->tradeRepository->findTradeById($tradeId);
         $optionPriceClose = $this->optionPriceRepository->findOptionPriceById($optionPriceCloseId);
-        
+
         $trade->setClosePrice($optionPriceClose);
+
         $this->tradeRepository->flush($trade);
+    }
+
+    /**
+     * Обновление минимумов и максимумов для открытых сделок
+     * @return int
+     */
+    public function updateOpenedTradesHighsAndLows(): int
+    {
+        $trades = $this->tradeRepository->findAllOpenedTrades();
+
+        $updatedTradesCount = 0;
+        foreach ($trades as $trade) {
+            $optionContract = $trade->getOpenPrice()->getOptionContract();
+            $currentOptionPrice = $this->optionPriceRepository->findOptionCurrentPrice($optionContract->getId());
+
+            if ($trade->getHighPrice()->isLowerThan($currentOptionPrice)) {
+                $trade->setHighPrice($currentOptionPrice);
+                $updatedTradesCount++;
+            } elseif ($trade->getLowPrice()->isGreaterThan($currentOptionPrice)) {
+                $trade->setLowPrice($currentOptionPrice);
+                $updatedTradesCount++;
+            }
+        }
+
+        $this->tradeRepository->flush();
+
+        return $updatedTradesCount;
     }
 }
