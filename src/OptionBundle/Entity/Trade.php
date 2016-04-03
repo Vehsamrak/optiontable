@@ -92,8 +92,7 @@ class Trade
     }
 
     /**
-     * Get openPrice
-     * @return string
+     * @return OptionPrice
      */
     public function getOpenPrice()
     {
@@ -101,8 +100,7 @@ class Trade
     }
 
     /**
-     * Get closePrice
-     * @return string
+     * @return OptionPrice
      */
     public function getClosePrice()
     {
@@ -110,20 +108,15 @@ class Trade
     }
 
     /**
-     * Set closePrice
      * @param string $closePrice
-     * @return Trade
      */
     public function setClosePrice($closePrice)
     {
         $this->closePrice = $closePrice;
-
-        return $this;
     }
 
     /**
-     * Get highPrice
-     * @return string
+     * @return OptionPrice
      */
     public function getHighPrice()
     {
@@ -131,20 +124,15 @@ class Trade
     }
 
     /**
-     * Set highPrice
      * @param string $highPrice
-     * @return Trade
      */
     public function setHighPrice($highPrice)
     {
         $this->highPrice = $highPrice;
-
-        return $this;
     }
 
     /**
-     * Get lowPrice
-     * @return string
+     * @return OptionPrice
      */
     public function getLowPrice()
     {
@@ -152,15 +140,11 @@ class Trade
     }
 
     /**
-     * Set lowPrice
      * @param string $lowPrice
-     * @return Trade
      */
     public function setLowPrice($lowPrice)
     {
         $this->lowPrice = $lowPrice;
-
-        return $this;
     }
 
     /**
