@@ -1,43 +1,16 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
 {% block body %}
-    {% if options|default %}
-        {% for option in options %}
-            <div>
-                <span class="option-type">{{ option.type }}</span>
-                <span class="option-strike">{{ option.strike }}</span>
-                <table border="1" bordercolor="lightgrey" cellspacing="0">
-                    {% for price in option.prices %}
-                        {% set currentOptionPrice = price.optionPrice %}
-                        {% set currentFuturesPrice = price.futuresPrice %}
+    <h3>Список контрактов:</h3>
 
-                        {% set optionPriceColor = 'white' %}
-                        {% if lastOptionPrice is defined and lastOptionPrice < currentOptionPrice %}
-                            {% set optionPriceColor = 'green' %}
-                        {% elseif lastOptionPrice is defined and lastOptionPrice > currentOptionPrice %}
-                            {% set optionPriceColor = 'red' %}
-                        {% endif %}
+    {% for futures in futuresList %}
+        <div><a href="{{ futures.code }}">{{ futures.code }}</a>
+            {% if futures.daysToExpiration > 0 %}
+                ({{ futures.daysToExpiration }} дней до экспирации)
+            {% else %}
+                <span style="color: #b0b0b0;">(опцион эксперирован)</span>
+            {% endif %}
+        </div>
+    {% endfor %}
 
-                        {% set futuresPriceColor = 'white' %}
-                        {% if lastFuturesPrice is defined and lastFuturesPrice < currentFuturesPrice %}
-                            {% set futuresPriceColor = 'green' %}
-                        {% elseif lastFuturesPrice is defined and lastFuturesPrice > currentFuturesPrice %}
-                            {% set futuresPriceColor = 'red' %}
-                        {% endif %}
-
-                        <tr>
-                            <td>{{ price.date }}</td>
-                            <td class="price {{ futuresPriceColor }}">{{ price.futuresPrice }}</td>
-                            <td class="price {{ optionPriceColor }}">{{ currentOptionPrice }}</td>
-                        </tr>
-
-                        {% set lastOptionPrice = currentOptionPrice %}
-                        {% set lastFuturesPrice = currentFuturesPrice %}
-                    {% endfor %}
-                </table>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div>No options was found.</div>
-    {% endif %}
 {% endblock body %}

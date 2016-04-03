@@ -2,14 +2,7 @@
 
 {% block body %}
 
-    {% for futures in futuresList %}
-        <div><a href="options/{{ futures.code }}">{{ futures.code }}</a>
-            {% if futures.daysToExpiration > 0 %}
-                ({{ futures.daysToExpiration }} дней до экспирации)
-            {% else %}
-                <span style="color: #b0b0b0;">(опцион эксперирован)</span>
-            {% endif %}
-        </div>
-    {% endfor %}
+<div><a href="{{ path('option_options_index') }}">Список контрактов</a></div>
+<div><a href="{{ path('option_trades_listtrades') }}">Мониторинг сделок</a></div>
 
 {% endblock body %}

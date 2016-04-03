@@ -1,26 +1,37 @@
 <?php
-/**
- * Author: Vehsamrak
- * Date Created: 14.02.16 16:17
- */
 
 namespace OptionBundle\Controller;
 
+use OptionBundle\Entity\Futures;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @author Vehsamrak
  * @Route("/options")
  */
 class OptionsController extends Controller
 {
+    /**
+     * @Route("/")
+     * @return Response
+     */
+    public function indexAction()
+    {
+        $futuresRepository = $this->get('optionboard.futures_repository');
+        $futures = $futuresRepository->findAll();
+
+        return $this->render('OptionBundle:Options:index.html.twig', [
+            'futuresList' => $this->getFuturesNames($futures),
+        ]);
+    }
 
     /**
      * @Route("/{futuresCode}")
      * @return Response
      */
-    public function indexAction(string $futuresCode): Response
+    public function showPricesAction(string $futuresCode): Response
     {
         $futuresRepository = $this->get('optionboard.futures_repository');
         $priceCollector = $this->get('optionboard.price_collector');
@@ -56,6 +67,31 @@ class OptionsController extends Controller
             }
         }
 
-        return $this->render('OptionBundle:Options:index.html.twig', $viewParameters);
+        return $this->render('OptionBundle:Options:prices.html.twig', $viewParameters);
+    }
+
+    /**
+     * @param Futures[] $futuresList
+     * @return array Futures full names
+     */
+    private function getFuturesNames(array $futuresList)
+    {
+        $priceCollector = $this->get('optionboard.price_collector');
+
+        $futuresNames = [];
+        foreach ($futuresList as $futures) {
+            $futuresId = $futures->getId();
+
+            $futuresNames[$futuresId]['code'] = sprintf(
+                '%s%s%d',
+                $futures->getSymbol()->getSymbol(),
+                $priceCollector->getMonthLetter($futures->getExpirationMonth()),
+                $futures->getExpirationYear()
+            );
+
+            $futuresNames[$futuresId]['daysToExpiration'] = $futures->getDaysToExpiration();
+        }
+
+        return $futuresNames;
     }
 }

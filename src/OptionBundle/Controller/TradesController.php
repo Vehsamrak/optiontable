@@ -18,7 +18,7 @@ class TradesController extends Controller
      * @Route("/")
      * @return Response
      */
-    public function openedTradesAction()
+    public function listTradesAction()
     {
         $tradesRepository = $this->get('optionboard.trade_repository');
 
@@ -38,7 +38,7 @@ class TradesController extends Controller
         $trader = $this->get('optionboard.trader');
         $trader->openTrade($direction, $optionPriceId, $volume);
 
-        return $this->redirectToRoute('option_trades_openedtrades');
+        return $this->redirectToRoute('option_trades_listtrades');
     }
 
     /**
@@ -53,6 +53,6 @@ class TradesController extends Controller
         $trader = $this->get('optionboard.trader');
         $trader->closeTrade($tradeId, $optionPriceId);
 
-        return $this->redirectToRoute('option_trades_openedtrades');
+        return $this->redirectToRoute('option_trades_listtrades');
     }
 }
