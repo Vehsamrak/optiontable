@@ -12,9 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Trade
 {
 
-    const DIRECTION_SELL = 'sell';
-    const DIRECTION_BUY = 'buy';
-
     /**
      * @var int
      * @ORM\Column(name="id", type="integer")
