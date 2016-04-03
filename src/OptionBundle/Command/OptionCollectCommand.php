@@ -71,7 +71,7 @@ class OptionCollectCommand extends ContainerAwareCommand
         $output->write('Updating opened trades highs and lows ...');
 
         $updatedTradesCount = $trader->updateOpenedTradesHighsAndLows();
-        $output->writeln(sprintf('%s trades were updated.', $updatedTradesCount));
+        $output->writeln(sprintf(' %s trades were updated.', $updatedTradesCount));
 
         $output->writeln(sprintf('It takes %d seconds.', microtime(true) - $startTime));
     }
