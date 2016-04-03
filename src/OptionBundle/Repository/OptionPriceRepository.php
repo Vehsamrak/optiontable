@@ -53,4 +53,13 @@ class OptionPriceRepository extends AbstractRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param int $optionPriceId
+     * @return OptionPrice|null
+     */
+    public function findOptionPriceById(int $optionPriceId)
+    {
+        return $this->find($optionPriceId);
+    }
 }

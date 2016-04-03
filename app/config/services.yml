@@ -6,6 +6,12 @@ services:
         - "@optionboard.option_contract_repository"
         - "@optionboard.option_price_repository"
 
+    optionboard.trader:
+        class: OptionBundle\Service\Trader
+        arguments:
+        - "@optionboard.option_price_repository"
+        - "@optionboard.trade_repository"
+
     optionboard.futures_repository:
         class: OptionBundle\Repository\FuturesRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -25,3 +31,8 @@ services:
         class: OptionBundle\Repository\OptionPriceRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments: [OptionBundle\Entity\OptionPrice]
+
+    optionboard.trade_repository:
+        class: OptionBundle\Repository\TradeRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: [OptionBundle\Entity\Trade]
