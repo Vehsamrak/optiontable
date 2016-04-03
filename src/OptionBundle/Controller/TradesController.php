@@ -50,19 +50,21 @@ class TradesController extends Controller
             $tradeDirection = $openedTrade->getDirection();
             $currentPrice = $optionPriceRepository->findOptionCurrentPrice(
                 $optionContract->getId()
-            )->getOptionPrice();
+            );
+            $currentPriceValue = $currentPrice->getOptionPrice();
 
             $openedTradesView[$openedTradeKey]['futures'] = $priceCollector->getFuturesName($futures);
-            $openedTradesView[$openedTradeKey]['futuresPrice'] = $openPrice->getFuturesPrice();
+            $openedTradesView[$openedTradeKey]['futuresPrice'] = $currentPrice->getFuturesPrice();
+            $openedTradesView[$openedTradeKey]['strike'] = $optionContract->getStrike();
             $openedTradesView[$openedTradeKey]['openDate'] = $openPrice->getDay();
             $openedTradesView[$openedTradeKey]['volume'] = $openedTrade->getVolume();
             $openedTradesView[$openedTradeKey]['openPrice'] = $optionPrice;
             $openedTradesView[$openedTradeKey]['highPrice'] = $openedTrade->getHighPrice()->getOptionPrice();
             $openedTradesView[$openedTradeKey]['lowPrice'] = $openedTrade->getLowPrice()->getOptionPrice();
-            $openedTradesView[$openedTradeKey]['profit'] = $this->calculateProfit($openedTrade, $currentPrice);
+            $openedTradesView[$openedTradeKey]['profit'] = $this->calculateProfit($openedTrade, $currentPriceValue);
 
             $openedTradesView[$openedTradeKey]['expiration'] = sprintf(
-                '%s (%d)',
+                '%s, %d дн.',
                 $futures->getExpiration(),
                 $futures->getDaysToExpiration()
             );
@@ -73,7 +75,7 @@ class TradesController extends Controller
                 $optionContract->getType()
             );
 
-            $openedTradesView[$openedTradeKey]['currentPrice'] = $currentPrice;
+            $openedTradesView[$openedTradeKey]['currentPrice'] = $currentPriceValue;
         }
 
         return $openedTradesView;

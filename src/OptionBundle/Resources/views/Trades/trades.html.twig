@@ -12,13 +12,14 @@
                 <td>фьючерс</td>
                 <td>экспирация</td>
                 <td>тип</td>
-                <td>открытие</td>
-                <td>объем</td>
+                <td>страйк</td>
                 <td>цена фьючерса</td>
-                <td>цена открытия</td>
-                <td>текущая цена</td>
-                <td>высшая цена</td>
-                <td>низшая цена</td>
+                <td>дата</td>
+                <td>объем</td>
+                <td>открытие</td>
+                <td>цена</td>
+                <td>высшая</td>
+                <td>низшая</td>
                 <td>результат</td>
             </tr>
             {% for openedTrade in openedTrades %}
@@ -32,9 +33,10 @@
                     <td>{{ openedTrade.futures }}</td>
                     <td>{{ openedTrade.expiration }}</td>
                     <td>{{ openedTrade.type }}</td>
+                    <td>{{ openedTrade.strike }}</td>
+                    <td>{{ openedTrade.futuresPrice }}</td>
                     <td>{{ openedTrade.openDate }}</td>
                     <td>{{ openedTrade.volume }}</td>
-                    <td>{{ openedTrade.futuresPrice }}</td>
                     <td>{{ openedTrade.openPrice }}</td>
                     <td>{{ openedTrade.currentPrice }}</td>
                     <td>{{ openedTrade.highPrice }}</td>
