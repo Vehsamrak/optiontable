@@ -42,11 +42,13 @@
                 <td>фьючерс</td>
                 <td>экспирация</td>
                 <td>тип</td>
+                <td>объем</td>
                 <td>открытие</td>
                 <td>закрытие</td>
-                <td>объем</td>
                 <td>цена открытия</td>
                 <td>цена закрытия</td>
+                <td>высшая цена</td>
+                <td>низшая цена</td>
                 <td>результат</td>
             </tr>
             {% for closedTrade in closedTrades %}
@@ -56,6 +58,8 @@
                 {% set closedPrice = closedTrade.closePrice %}
                 {% set openedOptionPrice = openedPrice.optionPrice %}
                 {% set closedOptionPrice = closedPrice.optionPrice %}
+                {% set highOptionPrice = closedTrade.highPrice.optionPrice %}
+                {% set lowOptionPrice = closedTrade.lowPrice.optionPrice %}
 
                 {% if closedTrade.directionBuy %}
                     {% set tradeResult = closedOptionPrice - openedOptionPrice %}
@@ -67,11 +71,13 @@
                     <td>{{ futures.symbol.symbol }}</td>
                     <td>{{ futures.expiration }}</td>
                     <td>{{ closedTrade.direction }} {{ closedPrice.optionContract.type }}</td>
+                    <td>{{ closedTrade.volume }}</td>
                     <td>{{ openedPrice.date }}</td>
                     <td>{{ closedPrice.date }}</td>
-                    <td>{{ closedTrade.volume }}</td>
                     <td>{{ openedOptionPrice }}</td>
                     <td>{{ closedOptionPrice }}</td>
+                    <td>{{ highOptionPrice }}</td>
+                    <td>{{ lowOptionPrice }}</td>
                     <td>{{ tradeResult * closedTrade.volume * optionPointPrice }}</td>
                 </tr>
             {% endfor %}
