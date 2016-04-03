@@ -15,7 +15,7 @@ class TradesController extends Controller
 
     /**
      * Список открытых сделок
-     * @Route("/")
+     * @Route("/", name="option_trades_list")
      * @return Response
      */
     public function listTradesAction()
@@ -30,7 +30,7 @@ class TradesController extends Controller
 
     /**
      * Открыть сделку с заданной ценой
-     * @Route("/open/{direction}/{optionPriceId}/{volume}")
+     * @Route("/open/{direction}/{optionPriceId}/{volume}", name="option_trade_open")
      * @return Response
      */
     public function openTradeAction(string $direction, int $optionPriceId, int $volume)
@@ -38,12 +38,12 @@ class TradesController extends Controller
         $trader = $this->get('optionboard.trader');
         $trader->openTrade($direction, $optionPriceId, $volume);
 
-        return $this->redirectToRoute('option_trades_listtrades');
+        return $this->redirectToRoute('option_trades_list');
     }
 
     /**
      * Закрыть определенную сделку по заданной цене
-     * @Route("/close/{tradeId}/{optionPriceId}")
+     * @Route("/close/{tradeId}/{optionPriceId}", name="option_trade_close")
      * @param int $tradeId
      * @param int $optionPriceId
      * @return Response
@@ -53,6 +53,6 @@ class TradesController extends Controller
         $trader = $this->get('optionboard.trader');
         $trader->closeTrade($tradeId, $optionPriceId);
 
-        return $this->redirectToRoute('option_trades_listtrades');
+        return $this->redirectToRoute('option_trades_list');
     }
 }

@@ -14,7 +14,7 @@ class DefaultController extends Controller
 {
 
     /**
-     * @Route("/")
+     * @Route("/", name="option_index")
      * @return Response
      */
     public function indexAction()

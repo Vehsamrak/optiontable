@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OptionsController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="option_options_list")
      * @return Response
      */
     public function indexAction()
@@ -28,7 +28,21 @@ class OptionsController extends Controller
     }
 
     /**
-     * @Route("/{futuresCode}")
+     * @Route("/all", name="option_options_all")
+     * @return Response
+     */
+    public function listAllAction()
+    {
+        $futuresRepository = $this->get('optionboard.futures_repository');
+        $futures = $futuresRepository->findAll();
+
+        return $this->render('OptionBundle:Options:index.html.twig', [
+            'futuresList' => $this->getFuturesNames($futures),
+        ]);
+    }
+
+    /**
+     * @Route("/{futuresCode}", name="option_option_show_prices")
      * @return Response
      */
     public function showPricesAction(string $futuresCode): Response
