@@ -1,8 +1,4 @@
 <?php
-/**
- * Author: Vehsamrak
- * Date Created: 14.02.16 16:17
- */
 
 namespace OptionBundle\Controller;
 
@@ -12,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @author Vehsamrak
  * @Route("/")
  */
 class DefaultController extends Controller
@@ -29,49 +26,6 @@ class DefaultController extends Controller
         return $this->render('OptionBundle:Default:index.html.twig', [
             'futuresList' => $this->getFuturesNames($futures),
         ]);
-    }
-
-    /**
-     * Список открытых сделок
-     * @Route("/trades")
-     * @return Response
-     */
-    public function openedTradesAction()
-    {
-        $tradesRepository = $this->get('optionboard.trade_repository');
-        $trades = $tradesRepository->findAllOpenedTrades();
-
-        return $this->render('OptionBundle:Default:trades.html.twig', [
-            'trades' => $trades, 
-        ]);
-    }
-
-    /**
-     * Открыть сделку с заданной ценой
-     * @Route("/trades/open/{direction}/{optionPriceId}/{volume}")
-     * @return Response
-     */
-    public function openTradeAction(string $direction, int $optionPriceId, int $volume)
-    {
-        $trader = $this->get('optionboard.trader');
-        $trader->openTrade($direction, $optionPriceId, $volume);
-
-        return $this->redirectToRoute('option_default_openedtrades');
-    }
-
-    /**
-     * Закрыть определенную сделку по заданной цене
-     * @Route("/trades/close/{tradeId}/{optionPriceId}")
-     * @param int $tradeId
-     * @param int $optionPriceId
-     * @return Response
-     */
-    public function closeTradeAction(int $tradeId, int $optionPriceId)
-    {
-        $trader = $this->get('optionboard.trader');
-        $trader->closeTrade($tradeId, $optionPriceId);
-
-        return $this->redirectToRoute('option_default_openedtrades');
     }
 
     /**
