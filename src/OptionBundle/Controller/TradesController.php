@@ -53,6 +53,8 @@ class TradesController extends Controller
             );
             $currentPriceValue = $currentPrice->getOptionPrice();
 
+            $openedTradesView[$openedTradeKey]['tradeId'] = $openedTrade->getId();
+            $openedTradesView[$openedTradeKey]['optionPriceId'] = $currentPrice->getId();
             $openedTradesView[$openedTradeKey]['futures'] = $priceCollector->getFuturesName($futures);
             $openedTradesView[$openedTradeKey]['futuresPrice'] = $currentPrice->getFuturesPrice();
             $openedTradesView[$openedTradeKey]['strike'] = $optionContract->getStrike();

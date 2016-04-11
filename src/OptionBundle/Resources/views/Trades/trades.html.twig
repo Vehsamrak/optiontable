@@ -21,6 +21,7 @@
                 <td>высшая</td>
                 <td>низшая</td>
                 <td>результат</td>
+                <td></td>
             </tr>
             {% for openedTrade in openedTrades %}
                 {% if openedTrade.profit > 0 %}
@@ -42,6 +43,15 @@
                     <td>{{ openedTrade.highPrice }}</td>
                     <td>{{ openedTrade.lowPrice }}</td>
                     <td class="{{ tradeResultColor }}">{{ openedTrade.profit }} $</td>
+                    <td>
+                        <a href="{{ path(
+                        'option_trade_close', {
+                            'optionPriceId': openedTrade.optionPriceId,
+                            'tradeId': openedTrade.tradeId
+                        }) }}">
+                            <button>закрыть</button>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
