@@ -31,7 +31,11 @@
                 {% endif %}
 
                 <tr>
-                    <td>{{ openedTrade.futures }}</td>
+                    <td>
+                        <a href="{{ path('option_option_show_prices', {'futuresCode': openedTrade.futures}) }}">
+                            {{ openedTrade.futures }}
+                        </a>
+                    </td>
                     <td>{{ openedTrade.expiration }}</td>
                     <td>{{ openedTrade.type }}</td>
                     <td>{{ openedTrade.strike }}</td>
