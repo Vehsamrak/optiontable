@@ -29,6 +29,19 @@
                             <td>{{ price.date }}</td>
                             <td class="price {{ futuresPriceColor }}">{{ price.futuresPrice }}</td>
                             <td class="price {{ optionPriceColor }}">{{ currentOptionPrice }}</td>
+
+                            <td>
+                                {% if loop.last %}
+                                    <a href="{{ path(
+                                    'option_trade_open', {
+                                        'direction': 'sell',
+                                        'optionPriceId': price.id,
+                                        'volume': 1
+                                    }) }}">
+                                        <button>открыть</button>
+                                    </a>
+                                {% endif %}
+                            </td>
                         </tr>
 
                         {% set lastOptionPrice = currentOptionPrice %}
