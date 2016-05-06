@@ -1,13 +1,28 @@
-security:
+imports:
+    - { resource: parameters.yml }
 
+security:
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin:
+                        password: "%admin_password_bcrypt%"
+                        roles: ROLE_ADMIN
+
+    encoders:
+            Symfony\Component\Security\Core\User\User:
+                algorithm: bcrypt
+                cost: 4
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             anonymous: ~
+            http_basic: ~
+
+    access_control:
+            - { path: ^/trades/open, roles: ROLE_ADMIN }
+            - { path: ^/trades/close, roles: ROLE_ADMIN }

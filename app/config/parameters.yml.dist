@@ -17,3 +17,5 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    admin_password_bcrypt: $2a$04$Qon3tI9YF72aWUtNdciXEucQC31vvpXv61xhcM/O2d5ovb.8MRLxG
