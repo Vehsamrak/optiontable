@@ -109,4 +109,9 @@ class Futures
             return $now->diff($this->expiration)->days;
         }
     }
+
+    public function isExpired(): bool
+    {
+        return (new \DateTime())->diff($this->expiration)->invert;
+    }
 }

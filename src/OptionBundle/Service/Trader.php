@@ -22,11 +22,10 @@ class Trader
     /** @var TradeRepository */
     private $tradeRepository;
 
-    /**
-     * @param OptionPriceRepository $optionPriceRepository
-     * @param TradeRepository       $tradeRepository
-     */
-    public function __construct(OptionPriceRepository $optionPriceRepository, TradeRepository $tradeRepository)
+    public function __construct(
+        OptionPriceRepository $optionPriceRepository,
+        TradeRepository $tradeRepository
+    )
     {
         $this->optionPriceRepository = $optionPriceRepository;
         $this->tradeRepository = $tradeRepository;
@@ -35,9 +34,6 @@ class Trader
 
     /**
      * Открытие сделки и запись ее в БД
-     * @param string $direction
-     * @param int    $optionPriceId
-     * @param int    $volume
      * @throws InvalidTradeDirection
      * @throws PriceNotFound
      */
@@ -57,9 +53,6 @@ class Trader
 
     /**
      * Закрытие сделки и запись результатов в БД
-     * @param int $tradeId
-     * @param int $optionPriceCloseId
-     * @return bool
      * @throws TradeNotFound
      */
     public function closeTrade(int $tradeId, int $optionPriceCloseId)
@@ -74,14 +67,12 @@ class Trader
 
     /**
      * Обновление минимумов и максимумов для открытых сделок
-     * @return int
+     * @param Trade[] $openedTrades
      */
-    public function updateOpenedTradesHighsAndLows(): int
+    public function updateOpenedTradesHighsAndLows(array $openedTrades): int
     {
-        $trades = $this->tradeRepository->findAllOpenedTrades();
-
         $updatedTradesCount = 0;
-        foreach ($trades as $trade) {
+        foreach ($openedTrades as $trade) {
             $optionContract = $trade->getOpenPrice()->getOptionContract();
             $currentOptionPrice = $this->optionPriceRepository->findOptionCurrentPrice($optionContract->getId());
 
@@ -97,5 +88,27 @@ class Trader
         $this->tradeRepository->flush();
 
         return $updatedTradesCount;
+    }
+
+    /**
+     * @param Trade[] $openedTrades
+     */
+    public function closeExpiredTrades(array $openedTrades): int
+    {
+        $closedTradesCount = 0;
+        foreach ($openedTrades as $trade) {
+            $optionPrice = $trade->getOpenPrice();
+            $optionContract = $optionPrice->getOptionContract();
+            $futures = $optionContract->getFutures();
+
+            if ($futures->isExpired()) {
+                $trade->expire();
+                $closedTradesCount++;
+            }
+        }
+
+        $this->tradeRepository->flush();
+
+        return $closedTradesCount;
     }
 }

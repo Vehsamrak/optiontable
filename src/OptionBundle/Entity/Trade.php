@@ -64,6 +64,12 @@ class Trade
     private $volume;
 
     /**
+     * @var bool
+     * @ORM\Column(name="is_expired", type="boolean", options={"default" : false})
+     */
+    private $isExpired = false;
+
+    /**
      * @param OptionPrice $openPrice
      */
     public function __construct(string $direction, OptionPrice $openPrice, int $volume)
@@ -157,6 +163,14 @@ class Trade
     }
 
     /**
+     * Опцион был эксперирован
+     */
+    public function isExpired(): bool
+    {
+        return $this->isExpired;
+    }
+
+    /**
      * @return bool
      */
     public function isDirectionBuy()
@@ -170,5 +184,14 @@ class Trade
     public function isDirectionSell()
     {
         return $this->direction == TradeDirection::DIRECTION_SELL;
+    }
+
+    /**
+     * @return void
+     */
+    public function expire()
+    {
+        $this->closePrice = $this->openPrice;
+        $this->isExpired = true;
     }
 }

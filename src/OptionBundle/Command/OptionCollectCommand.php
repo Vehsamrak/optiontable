@@ -17,7 +17,7 @@ class OptionCollectCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('option:collect');
-        $this->setDescription('Parce option prices and save them to database');
+        $this->setDescription('Parse option prices and save them to database');
 
         $this->addArgument(
             'symbolOffset',
@@ -65,13 +65,18 @@ class OptionCollectCommand extends ContainerAwareCommand
                 $priceCollector->saveOptionPrices($symbol, $monthNumber);
             }
         }
-
         $output->writeln('Option prices were saved.');
 
-        $output->write('Updating opened trades highs and lows ...');
+        $tradeRepository = $container->get('optionboard.trade_repository');
+        $openedTrades = $tradeRepository->findAllOpenedTrades();
 
-        $updatedTradesCount = $trader->updateOpenedTradesHighsAndLows();
-        $output->writeln(sprintf(' %s trades were updated.', $updatedTradesCount));
+        $output->write('Updating opened trades highs and lows ... ');
+        $updatedTradesCount = $trader->updateOpenedTradesHighsAndLows($openedTrades);
+        $output->writeln(sprintf('%s trades were updated.', $updatedTradesCount));
+
+        $output->write('Closing expirated trades ... ');
+        $closedTradesCount = $trader->closeExpiredTrades($openedTrades);
+        $output->writeln(sprintf('%s trades expires and were closed.', $closedTradesCount));
 
         $output->writeln(sprintf('It takes %d seconds.', microtime(true) - $startTime));
     }

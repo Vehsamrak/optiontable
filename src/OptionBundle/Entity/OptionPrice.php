@@ -148,7 +148,6 @@ class OptionPrice
     }
 
     /**
-     * Сравнение двух опционных цен
      * @param OptionPrice $comparableOptionPrice
      * @return bool
      */
@@ -158,12 +157,11 @@ class OptionPrice
     }
     
     /**
-     * Сравнение двух опционных цен
      * @param OptionPrice $comparableOptionPrice
      * @return bool
      */
     public function isLowerThan(OptionPrice $comparableOptionPrice): bool
     {
-        return $this->getOptionPrice() < $comparableOptionPrice->getOptionPrice();
+        return !$this->isGreaterThan($comparableOptionPrice);
     }
 }

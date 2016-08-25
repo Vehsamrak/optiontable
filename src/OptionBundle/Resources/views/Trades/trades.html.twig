@@ -90,7 +90,9 @@
                 {% set highOptionPrice = closedTrade.highPrice.optionPrice %}
                 {% set lowOptionPrice = closedTrade.lowPrice.optionPrice %}
 
-                {% if closedTrade.directionBuy %}
+                {% if closedTrade.expired %}
+                    {% set tradeResult = closedOptionPrice %}
+                {% elseif closedTrade.directionBuy %}
                     {% set tradeResult = closedOptionPrice - openedOptionPrice %}
                 {% else %}
                     {% set tradeResult = openedOptionPrice - closedOptionPrice %}
