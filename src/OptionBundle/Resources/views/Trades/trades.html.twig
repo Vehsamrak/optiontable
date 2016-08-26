@@ -91,7 +91,8 @@
                 {% set lowOptionPrice = closedTrade.lowPrice.optionPrice %}
 
                 {% if closedTrade.expired %}
-                    {% set tradeResult = closedOptionPrice %}
+                    {% set tradeResult = openedOptionPrice %}
+                    {% set tradeColumnColor = "bg-green" %}
                 {% elseif closedTrade.directionBuy %}
                     {% set tradeResult = closedOptionPrice - openedOptionPrice %}
                 {% else %}
@@ -106,7 +107,7 @@
                     {% set tradeResultColor = "bg-red" %}
                 {% endif %}
 
-                <tr>
+                <tr class="{{ closedTrade.expired ? tradeResultColor : '' }}">
                     <td>{{ futures.symbol.symbol }}</td>
                     <td>{{ futures.expiration }}</td>
                     <td>{{ closedTrade.direction }} {{ closedPrice.optionContract.type }}</td>
