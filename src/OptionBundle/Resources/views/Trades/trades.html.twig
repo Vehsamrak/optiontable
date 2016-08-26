@@ -90,13 +90,16 @@
                 {% set highOptionPrice = closedTrade.highPrice.optionPrice %}
                 {% set lowOptionPrice = closedTrade.lowPrice.optionPrice %}
 
-                {% if closedTrade.expired %}
-                    {% set tradeResult = openedOptionPrice %}
-                    {% set tradeColumnColor = "bg-green" %}
-                {% elseif closedTrade.directionBuy %}
+                {% if closedTrade.directionBuy %}
                     {% set tradeResult = closedOptionPrice - openedOptionPrice %}
                 {% else %}
                     {% set tradeResult = openedOptionPrice - closedOptionPrice %}
+                {% endif %}
+
+                {% if closedTrade.expired and closedTrade.directionSell %}
+                    {% if tradeResult >= 0 %}
+                        {% set tradeResult = openedOptionPrice %}
+                    {% endif %}
                 {% endif %}
 
                 {% set tradeResultMoney = tradeResult * closedTrade.volume * optionPointPrice %}
