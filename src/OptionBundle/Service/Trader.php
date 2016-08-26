@@ -54,6 +54,7 @@ class Trader
     /**
      * Закрытие сделки и запись результатов в БД
      * @throws TradeNotFound
+     * @throws PriceNotFound
      */
     public function closeTrade(int $tradeId, int $optionPriceCloseId)
     {
@@ -103,6 +104,9 @@ class Trader
 
             if ($futures->isExpired()) {
                 $trade->expire();
+                $optionContract = $trade->getOpenPrice()->getOptionContract();
+                $currentOptionPrice = $this->optionPriceRepository->findOptionCurrentPrice($optionContract->getId());
+                $this->closeTrade($trade->getId(), $currentOptionPrice->getId());
                 $closedTradesCount++;
             }
         }

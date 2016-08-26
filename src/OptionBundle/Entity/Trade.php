@@ -191,7 +191,6 @@ class Trade
      */
     public function expire()
     {
-        $this->closePrice = $this->openPrice;
         $this->isExpired = true;
     }
 }
