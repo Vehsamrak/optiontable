@@ -21,6 +21,8 @@ use Sunra\PhpSimple\HtmlDomParser;
 class PriceCollector
 {
 
+    const BARCHART_URL = 'http://old.barchart.com';
+
     /**
      * @var \DateTime
      */
@@ -99,16 +101,18 @@ class PriceCollector
         }
 
         $optionTableUrl = $this->createOptionTableUrl($symbol, $monthNumber);
+        $optionHtmlContents = file_get_contents($optionTableUrl);
         /** @var simple_html_dom $optionHtml */
-        $optionHtml = HtmlDomParser::file_get_html($optionTableUrl);
+        $optionHtml = HtmlDomParser::str_get_html($optionHtmlContents);
 
         if (count($optionHtml->find('span.error'))) {
             return [];
         }
 
         $futuresDataUrl = $this->createFuturesDataUrl($symbol, $monthNumber);
+        $futuresHtmlContents = file_get_contents($futuresDataUrl);
         /** @var simple_html_dom $optionHtml */
-        $futuresDataHtml = HtmlDomParser::file_get_html($futuresDataUrl);
+        $futuresDataHtml = HtmlDomParser::str_get_html($futuresHtmlContents);
 
         $futuresExpirationDate = strip_tags($optionHtml->find('#divContent table table tr td')[1]->text());
 
@@ -193,7 +197,7 @@ class PriceCollector
         $yearOfContract = $this->getYearOfContract($monthNumber);
 
         $optionTableUrl = sprintf(
-            'http://www.barchart.com/commodityfutures/null/options/%s%s%d?view=split&mode=i',
+            self::BARCHART_URL . '/commodityfutures/null/options/%s%s%d?view=split&mode=i',
             $symbol->getSymbol(),
             $this->getMonthLetter($monthNumber),
             $yearOfContract
@@ -271,7 +275,7 @@ class PriceCollector
         $yearOfContract = $this->getYearOfContract($monthNumber);
 
         $futuresDataUrl = sprintf(
-            'http://www.barchart.com/quotes/futures/%s%s%d',
+            self::BARCHART_URL . '/quotes/futures/%s%s%d',
             $symbol->getSymbol(),
             $this->getMonthLetter($monthNumber),
             $yearOfContract
