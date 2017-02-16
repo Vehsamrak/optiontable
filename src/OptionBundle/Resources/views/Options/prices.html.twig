@@ -1,6 +1,8 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
 {% block content %}
+    <img src="/volatility.png" alt="volatility chart">
+
     {% if options|default %}
         {% for option in options %}
             <div>
@@ -38,7 +40,7 @@
                                         'optionPriceId': price.id,
                                         'volume': 1
                                     }) }}">
-                                        <button>открыть</button>
+                                        <button>продать</button>
                                     </a>
                                 {% endif %}
                             </td>
