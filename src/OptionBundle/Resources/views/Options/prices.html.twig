@@ -5,7 +5,7 @@
 
     {% if options|default %}
         {% for option in options %}
-            <div>
+            <div id="option-{{ option.strike }}">
                 <span class="option-type">{{ option.type }}</span>
                 <span class="option-strike">{{ option.strike }}</span>
                 <table border="1" bordercolor="lightgrey" cellspacing="0">

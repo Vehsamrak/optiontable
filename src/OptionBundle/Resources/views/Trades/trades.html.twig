@@ -32,7 +32,8 @@
 
                 <tr>
                     <td>
-                        <a href="{{ path('option_option_show_prices', {'futuresCode': openedTrade.futures}) }}">
+                        <a href="{{ path('option_option_show_prices', {'futuresCode': openedTrade.futures})
+                            ~ '#option-' ~ openedTrade.strike }}">
                             {{ openedTrade.futures }}
                         </a>
                     </td>
@@ -111,7 +112,9 @@
                 {% endif %}
 
                 <tr class="{{ closedTrade.expired ? tradeResultColor : '' }}">
-                    <td>{{ futures.symbol.symbol }}</td>
+                    <td>
+                        {{ futures.symbol.symbol }}
+                    </td>
                     <td>{{ futures.expiration }}</td>
                     <td>{{ closedTrade.direction }} {{ closedPrice.optionContract.type }}</td>
                     <td>{{ closedTrade.volume }}</td>
