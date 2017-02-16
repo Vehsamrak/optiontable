@@ -18,6 +18,8 @@ app/phpunit.xml
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /web/bundles/
+/web/volatility.png
+/web/volatility.txt
 
 # Configuration files
 app/config/parameters.ini
