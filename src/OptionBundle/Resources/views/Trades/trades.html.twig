@@ -23,12 +23,15 @@
                 <td>результат</td>
                 <td></td>
             </tr>
+
+            {% set profitOverall = 0 %}
             {% for openedTrade in openedTrades %}
                 {% if openedTrade.profit > 0 %}
                     {% set tradeResultColor = "bg-green" %}
                 {% else %}
                     {% set tradeResultColor = "bg-red" %}
                 {% endif %}
+                {% set profitOverall = profitOverall + openedTrade.profit %}
 
                 <tr>
                     <td>
@@ -59,6 +62,19 @@
                     </td>
                 </tr>
             {% endfor %}
+
+            {% if profitOverall > 0 %}
+                {% set profitOverallResultColor = "bg-green" %}
+            {% else %}
+                {% set profitOverallResultColor = "bg-red" %}
+            {% endif %}
+
+            <tr>
+                <td colspan="10"></td>
+                <td class="center">итого</td>
+                <td class="{{ profitOverallResultColor }}">{{ profitOverall }} $</td>
+                <td></td>
+            </tr>
         </table>
     {% endif %}
 
