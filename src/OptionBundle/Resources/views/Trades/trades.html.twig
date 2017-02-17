@@ -24,14 +24,14 @@
                 <td></td>
             </tr>
 
-            {% set profitOverall = 0 %}
+            {% set openProfitOverall = 0 %}
             {% for openedTrade in openedTrades %}
                 {% if openedTrade.profit > 0 %}
                     {% set tradeResultColor = "bg-green" %}
                 {% else %}
                     {% set tradeResultColor = "bg-red" %}
                 {% endif %}
-                {% set profitOverall = profitOverall + openedTrade.profit %}
+                {% set openProfitOverall = openProfitOverall + openedTrade.profit %}
 
                 <tr>
                     <td>
@@ -63,16 +63,16 @@
                 </tr>
             {% endfor %}
 
-            {% if profitOverall > 0 %}
-                {% set profitOverallResultColor = "bg-green" %}
+            {% if openProfitOverall > 0 %}
+                {% set openProfitOverallResultColor = "bg-green" %}
             {% else %}
-                {% set profitOverallResultColor = "bg-red" %}
+                {% set openProfitOverallResultColor = "bg-red" %}
             {% endif %}
 
             <tr>
                 <td colspan="10"></td>
-                <td class="center">итого</td>
-                <td class="{{ profitOverallResultColor }}">{{ profitOverall }} $</td>
+                <td class="bold">итого</td>
+                <td class="{{ openProfitOverallResultColor }}"><span class="bold">{{ openProfitOverall }}</span> $</td>
                 <td></td>
             </tr>
         </table>
@@ -97,6 +97,8 @@
                 <td>низшая цена</td>
                 <td>результат</td>
             </tr>
+
+            {% set closeProfitOverall = 0 %}
             {% for closedTrade in closedTrades %}
                 {% set futures = closedTrade.closePrice.optionContract.futures %}
                 {% set optionPointPrice = futures.symbol.optionPointPrice %}
@@ -127,6 +129,8 @@
                     {% set tradeResultColor = "bg-red" %}
                 {% endif %}
 
+                {% set closeProfitOverall = closeProfitOverall + tradeResultMoney %}
+
                 <tr class="{{ closedTrade.expired ? tradeResultColor : '' }}">
                     <td>
                         {{ futures.symbol.symbol }}
@@ -143,6 +147,18 @@
                     <td class="{{ tradeResultColor }}">{{ tradeResultMoney }} $</td>
                 </tr>
             {% endfor %}
+
+            {% if closeProfitOverall > 0 %}
+                {% set closeProfitOverallResultColor = "bg-green" %}
+            {% else %}
+                {% set closeProfitOverallResultColor = "bg-red" %}
+            {% endif %}
+
+            <tr>
+                <td colspan="9"></td>
+                <td class="bold">итого</td>
+                <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ closeProfitOverall }}</span> $</td>
+            </tr>
         </table>
     {% endif %}
 
