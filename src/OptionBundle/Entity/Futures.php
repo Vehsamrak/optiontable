@@ -17,6 +17,7 @@ class Futures
     const EXPIRATION_DATE_FORMAT = 'Y-m-d';
     const EXPIRATION_YEAR_FORMAT = 'y';
     const EXPIRATION_MONTH_FORMAT = 'n';
+    const DEFAULT_MARGIN = 3200;
 
     /**
      * @var int
@@ -40,6 +41,12 @@ class Futures
     private $symbol;
 
     /**
+     * @var int
+     * @ORM\Column(name="margin", type="integer")
+     */
+    private $margin;
+
+    /**
      * @param string $expiration
      * @param Symbol $symbol
      */
@@ -49,6 +56,7 @@ class Futures
     ) {
         $this->symbol = $symbol;
         $this->expiration = new \DateTime($expiration);
+        $this->margin = self::DEFAULT_MARGIN;
     }
 
     /**
