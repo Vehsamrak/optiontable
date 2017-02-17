@@ -122,4 +122,9 @@ class Futures
     {
         return (new \DateTime())->diff($this->expiration)->invert;
     }
+
+    public function getMargin(): int
+    {
+        return $this->margin;
+    }
 }

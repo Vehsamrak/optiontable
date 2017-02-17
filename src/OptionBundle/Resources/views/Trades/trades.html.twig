@@ -7,13 +7,14 @@
     {% else %}
         <h3>Открытые сделки:</h3>
 
-        <table border="1" bordercolor="lightgrey" cellspacing="0">
+        <table border="1" bordercolor="lightgrey" cellspacing="0" class="center">
             <tr>
                 <td>фьючерс</td>
                 <td>экспирация</td>
                 <td>тип</td>
                 <td>страйк</td>
                 <td>цена фьючерса</td>
+                <td>маржа</td>
                 <td>дата</td>
                 <td>объем</td>
                 <td>открытие</td>
@@ -25,6 +26,7 @@
             </tr>
 
             {% set openProfitOverall = 0 %}
+            {% set openMarginOverall = 0 %}
             {% for openedTrade in openedTrades %}
                 {% if openedTrade.profit > 0 %}
                     {% set tradeResultColor = "bg-green" %}
@@ -32,6 +34,7 @@
                     {% set tradeResultColor = "bg-red" %}
                 {% endif %}
                 {% set openProfitOverall = openProfitOverall + openedTrade.profit %}
+                {% set openMarginOverall = openMarginOverall + openedTrade.margin %}
 
                 <tr>
                     <td>
@@ -44,6 +47,7 @@
                     <td>{{ openedTrade.type }}</td>
                     <td>{{ openedTrade.strike }}</td>
                     <td>{{ openedTrade.futuresPrice }}</td>
+                    <td>{{ openedTrade.margin }}</td>
                     <td>{{ openedTrade.openDate }}</td>
                     <td>{{ openedTrade.volume }}</td>
                     <td>{{ openedTrade.openPrice }}</td>
@@ -70,7 +74,9 @@
             {% endif %}
 
             <tr>
-                <td colspan="10"></td>
+                <td colspan="9"></td>
+                <td>маржа</td>
+                <td>{{ openMarginOverall }}</td>
                 <td class="bold">итого</td>
                 <td class="{{ openProfitOverallResultColor }}"><span class="bold">{{ openProfitOverall }}</span> $</td>
                 <td></td>
@@ -83,7 +89,7 @@
     {% else %}
         <h3>Закрытые сделки:</h3>
 
-        <table border="1" bordercolor="lightgrey" cellspacing="0">
+        <table border="1" bordercolor="lightgrey" cellspacing="0" class="center">
             <tr>
                 <td>фьючерс</td>
                 <td>экспирация</td>
