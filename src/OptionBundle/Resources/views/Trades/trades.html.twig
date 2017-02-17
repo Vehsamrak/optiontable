@@ -68,16 +68,27 @@
             {% endfor %}
 
             {% if openProfitOverall > 0 %}
+                {% set openPercentOverall = openProfitOverall / openMarginOverall * 100 %}
+                {% set openPercentOverallResultColor = "bg-green" %}
+            {% else %}
+                {% set openPercentOverall = 0 %}
+                {% set openPercentOverallResultColor = "bg-red" %}
+            {% endif %}
+
+            {% if openProfitOverall > 0 %}
                 {% set openProfitOverallResultColor = "bg-green" %}
             {% else %}
                 {% set openProfitOverallResultColor = "bg-red" %}
             {% endif %}
 
             <tr>
-                <td colspan="9"></td>
+                <td colspan="8"></td>
                 <td>маржа</td>
                 <td>{{ openMarginOverall }}</td>
-                <td class="bold">итого</td>
+                <td></td>
+                <td class="{{ openPercentOverallResultColor }}">
+                    <span class="bold">{{ openPercentOverall|round(2) }}</span> %
+                </td>
                 <td class="{{ openProfitOverallResultColor }}"><span class="bold">{{ openProfitOverall }}</span> $</td>
                 <td></td>
             </tr>
@@ -105,6 +116,7 @@
             </tr>
 
             {% set closeProfitOverall = 0 %}
+            {% set closeMarginAverage = 0 %}
             {% for closedTrade in closedTrades %}
                 {% set futures = closedTrade.closePrice.optionContract.futures %}
                 {% set optionPointPrice = futures.symbol.optionPointPrice %}
@@ -137,6 +149,8 @@
 
                 {% set closeProfitOverall = closeProfitOverall + tradeResultMoney %}
 
+                {% set closeMarginAverage = closeMarginAverage + futures.margin %}
+
                 <tr class="{{ closedTrade.expired ? tradeResultColor : '' }}">
                     <td>
                         {{ futures.symbol.symbol }}
@@ -160,9 +174,12 @@
                 {% set closeProfitOverallResultColor = "bg-red" %}
             {% endif %}
 
+            {# Средняя маржа всех закрытых сделок #}
+            {% set closeMarginAverage = closeMarginAverage / closedTrades|length %}
+
             <tr>
                 <td colspan="9"></td>
-                <td class="bold">итого</td>
+                <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ (closeProfitOverall / 64)|round(2) }}</span> %</td>
                 <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ closeProfitOverall }}</span> $</td>
             </tr>
         </table>
