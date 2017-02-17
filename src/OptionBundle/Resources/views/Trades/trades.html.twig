@@ -82,10 +82,11 @@
             {% endif %}
 
             <tr>
-                <td colspan="8"></td>
+                <td colspan="4"></td>
                 <td>маржа</td>
                 <td>{{ openMarginOverall }}</td>
-                <td></td>
+                <td colspan="4"></td>
+                <td>итого</td>
                 <td class="{{ openPercentOverallResultColor }}">
                     <span class="bold">{{ openPercentOverall|round(2) }}</span> %
                 </td>
@@ -178,7 +179,8 @@
             {% set closeMarginAverage = closeMarginAverage / closedTrades|length %}
 
             <tr>
-                <td colspan="9"></td>
+                <td colspan="8"></td>
+                <td>итого</td>
                 <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ (closeProfitOverall / 64)|round(2) }}</span> %</td>
                 <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ closeProfitOverall }}</span> $</td>
             </tr>
