@@ -181,7 +181,9 @@
             <tr>
                 <td colspan="8"></td>
                 <td>итого</td>
-                <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ (closeProfitOverall / 64)|round(2) }}</span> %</td>
+                <td class="{{ closeProfitOverallResultColor }}">
+                    <span class="bold">{{ (closeProfitOverall / (closeMarginAverage * 2) * 100)|round(2) }}</span> %
+                </td>
                 <td class="{{ closeProfitOverallResultColor }}"><span class="bold">{{ closeProfitOverall }}</span> $</td>
             </tr>
         </table>
