@@ -1,11 +1,13 @@
 {% extends 'OptionBundle::layout.html.twig' %}
 
 {% block content %}
+    <h3>Проекция волатильности</h3>
+    <img src="/volatility.png" alt="volatility chart">
 
     {% if openedTrades is empty %}
         <h3>Открытых сделок нет</h3>
     {% else %}
-        <h3>Открытые сделки:</h3>
+        <h3>Открытые сделки</h3>
 
         <table border="1" bordercolor="lightgrey" cellspacing="0" class="center">
             <tr>
@@ -99,7 +101,7 @@
     {% if closedTrades is empty %}
         <h3>Закрытых сделок нет</h3>
     {% else %}
-        <h3>Закрытые сделки:</h3>
+        <h3>Закрытые сделки</h3>
 
         <table border="1" bordercolor="lightgrey" cellspacing="0" class="center">
             <tr>
