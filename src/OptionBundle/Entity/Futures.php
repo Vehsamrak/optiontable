@@ -17,7 +17,7 @@ class Futures
     const EXPIRATION_DATE_FORMAT = 'Y-m-d';
     const EXPIRATION_YEAR_FORMAT = 'y';
     const EXPIRATION_MONTH_FORMAT = 'n';
-    const DEFAULT_MARGIN = 3200;
+    const DEFAULT_MARGIN = 2500;
 
     /**
      * @var int
